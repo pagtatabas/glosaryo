@@ -1655,6 +1655,7 @@
             position: relative;
             font-weight: 600;
             letter-spacing: 0.2px;
+            text-align: justify;
         }
 
         /* Kasaysayan section dividers */
@@ -1784,6 +1785,8 @@
 
             .hero {
                 padding: 0 25px;
+                align-items: center;
+                text-align: center;
             }
 
             .hero h1 {
@@ -1792,6 +1795,18 @@
 
             .hero p {
                 font-size: clamp(16px, 4vw, 22px);
+            }
+
+            .hero-eyebrow {
+                justify-content: center;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .hero-badge {
+                justify-content: center;
             }
 
             .carousel-section,
@@ -1857,6 +1872,8 @@
         @media (max-width: 480px) {
             .hero {
                 padding: 0 18px;
+                align-items: center;
+                text-align: center;
             }
 
             .hero h1 {
@@ -2493,7 +2510,7 @@
         .fc-count {
             font-family: 'Jersey 25', cursive;
             font-size: 16px;
-            color: #291501; 
+            color: #291501;
             text-align: center;
         }
 
@@ -2502,18 +2519,20 @@
             font-size: 14px;
             padding: 8px 18px;
             border: 2px solid #291501;
-            color: #291501;;
+            color: #291501;
+            ;
             background: transparent;
             cursor: pointer;
             letter-spacing: 1px;
             transition: all 0.15s steps(2);
         }
 
-        body.dark-mode .fc-shuffle-btn{
+        body.dark-mode .fc-shuffle-btn {
             color: #f0deb0;
             border: 2px solid #f0deb0;
         }
-        body.dark-mode .fc-count{
+
+        body.dark-mode .fc-count {
             color: #f0deb0;
         }
 
