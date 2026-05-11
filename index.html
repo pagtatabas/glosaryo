@@ -1,0 +1,4310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glosaryo ng Kartunan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="./images/bg4.png" type="image/png">
+
+    <style>
+        /* ===== LIGHT MODE (DEFAULT) ===== */
+        :root {
+            --gold: #FFDA44;
+            --gold-dark: #ed9b0e;
+            --gold-deep: #d29420;
+            --red: #9B2828;
+            --red-dark: #7A1616;
+            --red-deep: #4E0A0A;
+            --blue: #1a4d8f;
+            --blue-mid: #2563a8;
+            --blue-light: #4a80c4;
+            --blue-sky: #2a9db8;
+            --teal: #127a6e;
+            /* Enhanced Cardboard / kraft paper palette */
+            --bg-page: #c8a86a;
+            --bg-section: #b8944e;
+            --bg-section2: #c2a05a;
+            --bg-dark: #241504;
+            --text-body: #1e1002;
+            --text-muted: #4a2e0e;
+            --text-on-dark: #f5e4c0;
+            --card-bg: #e0c080;
+            --card-border: #8a6420;
+            --nav-bg: rgba(28, 14, 2, 0.97);
+            --search-bg: rgba(30, 16, 2, 0.65);
+            --pixel-shadow: 4px 4px 0px #4a2206;
+            --card-radius: 0px;
+            /* Audio button */
+            --audio-bg: #9B2828;
+            --audio-hover: #7A1616;
+            --audio-text: #fff8ee;
+        }
+
+        /* ===== DARK MODE ===== */
+        body.dark-mode {
+            --bg-page: #160e02;
+            --bg-section: #1c1204;
+            --bg-section2: #181002;
+            --text-body: #e8d5a8;
+            --text-muted: #a08050;
+            --text-on-dark: #e8d5a8;
+            --card-bg: #241602;
+            --card-border: #6e4a10;
+            --nav-bg: rgba(8, 4, 0, 0.98);
+            --search-bg: rgba(8, 4, 0, 0.8);
+            --gold: #FFDA44;
+            --gold-dark: #c88a08;
+            --gold-deep: #cb9634;
+        }
+
+        /* ===== CARDBOARD TEXTURE MIXIN ===== */
+        .cardboard-bg {
+            background-color: var(--bg-section);
+            background-image:
+                repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.065) 2px,
+                    rgba(0, 0, 0, 0.065) 3px),
+                repeating-linear-gradient(90deg,
+                    transparent,
+                    transparent 5px,
+                    rgba(0, 0, 0, 0.045) 5px,
+                    rgba(0, 0, 0, 0.045) 6px),
+                repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 18px,
+                    rgba(255, 220, 140, 0.055) 18px,
+                    rgba(255, 220, 140, 0.055) 19px),
+                repeating-linear-gradient(135deg,
+                    transparent,
+                    transparent 24px,
+                    rgba(0, 0, 0, 0.025) 24px,
+                    rgba(0, 0, 0, 0.025) 25px),
+                linear-gradient(160deg,
+                    rgba(255, 235, 180, 0.14) 0%,
+                    transparent 40%,
+                    rgba(0, 0, 0, 0.12) 100%);
+        }
+
+        .cardboard-bg2 {
+            background-color: var(--bg-section2);
+            background-image:
+                repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(0, 0, 0, 0.06) 3px,
+                    rgba(0, 0, 0, 0.06) 4px),
+                repeating-linear-gradient(88deg,
+                    transparent,
+                    transparent 7px,
+                    rgba(0, 0, 0, 0.04) 7px,
+                    rgba(0, 0, 0, 0.04) 8px),
+                repeating-linear-gradient(135deg,
+                    transparent,
+                    transparent 22px,
+                    rgba(180, 120, 30, 0.06) 22px,
+                    rgba(180, 120, 30, 0.06) 23px),
+                linear-gradient(135deg,
+                    rgba(255, 230, 160, 0.1) 0%,
+                    transparent 50%,
+                    rgba(0, 0, 0, 0.1) 100%);
+        }
+
+        /* ===== CARDBOARD TAPE DECORATION ===== */
+        .cardboard-tape {
+            position: absolute;
+            background: rgba(210, 185, 110, 0.45);
+            border-top: 1px solid rgba(180, 150, 60, 0.3);
+            border-bottom: 1px solid rgba(180, 150, 60, 0.3);
+            transform: rotate(-2deg);
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* Stamp decoration for sections */
+        .section-stamp {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 4px dashed rgba(180, 120, 30, 0.35);
+            transform: rotate(-8deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Jersey 25', cursive;
+            font-size: 10px;
+            color: rgba(180, 120, 30, 0.4);
+            letter-spacing: 2px;
+            pointer-events: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /*repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0, 0, 0, 0.04) 3px, rgba(0, 0, 0, 0.04) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0, 0, 0, 0.025) 5px, rgba(0, 0, 0, 0.025) 6px),
+                */
+        body {
+            background-color: var(--bg-page);
+            background-image:
+                url('./images/bg6.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--text-body);
+            font-family: 'Nunito', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            color: var(--text-body);
+        }
+
+        /* ===== PIXEL CORNERS MIXIN ===== */
+        .pixel-corners {
+            clip-path: polygon(0% 10px, 5px 10px, 5px 5px, 10px 5px, 10px 0%,
+                    calc(100% - 10px) 0%, calc(100% - 10px) 5px, calc(100% - 5px) 5px,
+                    calc(100% - 5px) 10px, 100% 10px, 100% calc(100% - 10px),
+                    calc(100% - 5px) calc(100% - 10px), calc(100% - 5px) calc(100% - 5px),
+                    calc(100% - 10px) calc(100% - 5px), calc(100% - 10px) 100%,
+                    10px 100%, 10px calc(100% - 5px), 5px calc(100% - 5px),
+                    5px calc(100% - 10px), 0% calc(100% - 10px));
+        }
+
+        .pixel-corners-lg {
+            clip-path: polygon(0% 20px, 6px 20px, 6px 14px, 14px 14px, 14px 6px, 20px 6px, 20px 0%,
+                    calc(100% - 20px) 0%, calc(100% - 20px) 6px, calc(100% - 14px) 6px,
+                    calc(100% - 14px) 14px, calc(100% - 6px) 14px, calc(100% - 6px) 20px, 100% 20px,
+                    100% calc(100% - 20px), calc(100% - 6px) calc(100% - 20px),
+                    calc(100% - 6px) calc(100% - 14px), calc(100% - 14px) calc(100% - 14px),
+                    calc(100% - 14px) calc(100% - 6px), calc(100% - 20px) calc(100% - 6px),
+                    calc(100% - 20px) 100%, 20px 100%, 20px calc(100% - 6px), 14px calc(100% - 6px),
+                    14px calc(100% - 14px), 6px calc(100% - 14px), 6px calc(100% - 20px), 0% calc(100% - 20px));
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: var(--nav-bg);
+            backdrop-filter: blur(8px);
+            border-bottom: 3px solid var(--gold);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-logo {
+            font-family: 'Jersey 25', cursive;
+            font-size: 22px;
+            color: var(--gold);
+            text-shadow: 2px 2px 0 var(--red-dark);
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .nav-left {
+            display: flex;
+            gap: 0;
+            align-items: center;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav a {
+            color: #f0deb0;
+            text-decoration: none;
+            margin: 0 8px;
+            font-family: 'Jersey 25', cursive;
+            font-size: 20px;
+            transition: all 0.2s ease;
+            position: relative;
+            padding: 6px 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.5);
+        }
+
+        nav a.active {
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        nav a:not(.active):hover {
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0.08);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--gold);
+            margin: 4px 0;
+            transition: 0.3s;
+            border-radius: 0;
+            image-rendering: pixelated;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: var(--nav-bg);
+            border-left: 4px solid var(--gold);
+            flex-direction: column;
+            padding: 80px 30px 30px;
+            z-index: 999;
+            transition: right 0.4s ease;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+            display: flex;
+        }
+
+        .mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Jersey 25', cursive;
+            font-size: 24px;
+            padding: 15px 0;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a.active {
+            color: var(--gold);
+        }
+
+        .mobile-menu a:hover {
+            color: var(--gold);
+            padding-left: 10px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 5%;
+            position: relative;
+            background-color: #5a3a10;
+            background-image:
+                url('./images/bg6.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+
+        body.dark-mode .hero {
+            background-color: transparent;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0, 0, 0, 0.08) 3px, rgba(0, 0, 0, 0.08) 4px),
+                linear-gradient(160deg, rgba(0, 0, 0, 0.7) 0%, rgba(5, 2, 0, 0.8) 50%, rgba(0, 0, 0, 0.9) 100%),
+                url('./images/bg6.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Pixel scanline overlay 
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.03) 0px,
+                    rgba(0, 0, 0, 0.03) 1px,
+                    transparent 1px,
+                    transparent 4px);
+            pointer-events: none;
+            z-index: 1;
+        }*/
+
+        /* Bottom gradient fade */
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 180px;
+            background: linear-gradient(to bottom, transparent, rgba(15, 5, 0, 0.6));
+            z-index: 1;
+        }
+
+        .hero>* {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Floating pixel particles */
+        .pixel-particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .pixel-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            opacity: 0;
+            animation: floatPixel linear infinite;
+            image-rendering: pixelated;
+        }
+
+        @keyframes floatPixel {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .hero-eyebrow {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(14px, 2vw, 20px);
+            color: #fff8e8;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            margin-top: 80px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: fadeSlideUp 0.8s ease forwards;
+            opacity: 0;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7), 0 0 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-eyebrow::before,
+        .hero-eyebrow::after {
+            content: '■';
+            font-size: 10px;
+            color: #ff8a65;
+        }
+
+        .hero h1 {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(80px, 22vw, 200px);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            line-height: 0.9;
+            font-weight: 900;
+            position: relative;
+            display: inline-block;
+            animation: fadeSlideUp 0.8s 0.2s ease forwards;
+            opacity: 0;
+        }
+
+        .hero h1::before {
+            content: 'GLOSARYO';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #FFDA44, #fff8d0, #FFDA44, #ffe88a, #FFDA44);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 12s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        .hero h1::after {
+            content: 'GLOSARYO';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            color: transparent;
+            text-shadow: 6px 6px 0px #424242, 10px 10px 0px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        @keyframes textShine {
+            0% {
+                background-position: 300% 0;
+            }
+
+            100% {
+                background-position: -300% 0;
+            }
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-family: 'Nunito', sans-serif;
+            max-width: 650px;
+            font-size: clamp(16px, 2.2vw, 24px);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            color: rgba(255, 240, 200, 0.95);
+            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
+            letter-spacing: 0.3px;
+            font-weight: 600;
+            animation: fadeSlideUp 0.8s 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(180, 120, 20, 0.25);
+            border: 2px solid var(--gold);
+            padding: 8px 18px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 30px;
+            animation: fadeSlideUp 0.8s 0.3s ease forwards;
+            opacity: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--red);
+            animation: blink 1s steps(1) infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            animation: fadeSlideUp 0.8s 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: #000;
+            font-family: 'Jersey 25', cursive;
+            font-size: 20px;
+            padding: 14px 32px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            transition: all 0.15s steps(2);
+            clip-path: polygon(0% 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0%,
+                    calc(100% - 8px) 0%, calc(100% - 8px) 4px, calc(100% - 4px) 4px,
+                    calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px),
+                    calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px),
+                    calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
+                    8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px),
+                    4px calc(100% - 8px), 0% calc(100% - 8px));
+            box-shadow: 4px 4px 0 var(--red-dark), 8px 8px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-deep);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--red-dark), 10px 10px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            font-family: 'Jersey 25', cursive;
+            font-size: 20px;
+            padding: 14px 32px;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounceArrow 2s infinite;
+            cursor: pointer;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .scroll-down-label {
+            font-family: 'Jersey 25', cursive;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .scroll-down svg {
+            width: 36px;
+            height: 36px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        @keyframes bounceArrow {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-12px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-6px);
+            }
+        }
+
+        /* ===== SECTION TRANSITION OVERLAY ===== */
+        .page-transition {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-dark);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .page-transition.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ===== CAROUSEL SECTION ===== */
+        .carousel-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            background-color: transparent;
+            background: rgba(20, 10, 0, 0.0);
+            text-align: center;
+            position: relative;
+        }
+
+        body.dark-mode .carousel-section {
+            background-color: rgba(10, 6, 1, 0.8);
+        }
+
+        .section-heading {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(40px, 8vw, 80px);
+            color: #FFDA44;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0 #5a0000, 4px 4px 0 rgba(0, 0, 0, 0.5), -1px -1px 0 rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 50px;
+        }
+
+        .section-divider .line {
+            height: 4px;
+            width: 60px;
+            background: var(--red);
+        }
+
+        .section-divider .diamond {
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        /* Category badges */
+        .category-pills {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .category-pill {
+            font-family: 'Jersey 25', cursive;
+            font-size: 16px;
+            padding: 6px 18px;
+            border: 2px solid rgba(255, 220, 100, 0.7);
+            color: #fff8e0;
+            cursor: default;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.18);
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1250px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 15px 10px 30px;
+        }
+
+        .carousel-card {
+            min-width: 280px;
+            width: 280px;
+            height: 390px;
+            margin: 0 12px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: linear-gradient(160deg, #FFDA44 0%, #ffffff 55%, #FFDA44 100%);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.35), 0 8px 0 0 var(--red-dark), 0 12px 0 0 var(--red-deep), 0 14px 20px rgba(0, 0, 0, 0.45);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .carousel-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: inherit;
+            clip-path: polygon(0% 20px, 6px 20px, 6px 14px, 14px 14px, 14px 6px, 20px 6px, 20px 0%,
+                    calc(100% - 20px) 0%, calc(100% - 20px) 6px, calc(100% - 14px) 6px,
+                    calc(100% - 14px) 14px, calc(100% - 6px) 14px, calc(100% - 6px) 20px, 100% 20px,
+                    100% calc(100% - 20px), calc(100% - 6px) calc(100% - 20px),
+                    calc(100% - 6px) calc(100% - 14px), calc(100% - 14px) calc(100% - 14px),
+                    calc(100% - 14px) calc(100% - 6px), calc(100% - 20px) calc(100% - 6px),
+                    calc(100% - 20px) 100%, 20px 100%, 20px calc(100% - 6px), 14px calc(100% - 6px),
+                    14px calc(100% - 14px), 6px calc(100% - 14px), 6px calc(100% - 20px), 0% calc(100% - 20px));
+        }
+
+        .carousel-card:hover {
+            transform: translateY(-14px) scale(1.02);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.4), 0 12px 0 0 var(--red), 0 16px 0 0 var(--red-dark), 0 20px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Card number badge */
+        .card-number {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-family: 'Jersey 25', cursive;
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.4);
+            z-index: 5;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .card-blue-bg {
+            position: absolute;
+            inset: 15px;
+            border-radius: 0;
+            clip-path: polygon(0% 15px, 5px 15px, 5px 10px, 10px 10px, 10px 5px, 15px 5px, 15px 0%,
+                    calc(100% - 15px) 0%, calc(100% - 15px) 5px, calc(100% - 10px) 5px,
+                    calc(100% - 10px) 10px, calc(100% - 5px) 10px, calc(100% - 5px) 15px, 100% 15px,
+                    100% calc(100% - 15px), calc(100% - 5px) calc(100% - 15px),
+                    calc(100% - 5px) calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
+                    calc(100% - 10px) calc(100% - 5px), calc(100% - 15px) calc(100% - 5px),
+                    calc(100% - 15px) 100%, 15px 100%, 15px calc(100% - 5px), 10px calc(100% - 5px),
+                    10px calc(100% - 10px), 5px calc(100% - 10px), 5px calc(100% - 15px), 0% calc(100% - 15px));
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 3px), repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0, 0, 0, 0.025) 5px, rgba(0, 0, 0, 0.025) 6px), linear-gradient(160deg, #3a2008 0%, #2c1804 50%, #1e1002 100%);
+        }
+
+        .card-red-bg {
+            position: absolute;
+            inset: 15px;
+            clip-path: polygon(0% 15px, 5px 15px, 5px 10px, 10px 10px, 10px 5px, 15px 5px, 15px 0%,
+                    calc(100% - 15px) 0%, calc(100% - 15px) 5px, calc(100% - 10px) 5px,
+                    calc(100% - 10px) 10px, calc(100% - 5px) 10px, calc(100% - 5px) 15px, 100% 15px,
+                    100% calc(100% - 15px), calc(100% - 5px) calc(100% - 15px),
+                    calc(100% - 5px) calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
+                    calc(100% - 10px) calc(100% - 5px), calc(100% - 15px) calc(100% - 5px),
+                    calc(100% - 15px) 100%, 15px 100%, 15px calc(100% - 5px), 10px calc(100% - 5px),
+                    10px calc(100% - 10px), 5px calc(100% - 10px), 5px calc(100% - 15px), 0% calc(100% - 15px));
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 3px), repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0, 0, 0, 0.025) 5px, rgba(0, 0, 0, 0.025) 6px), linear-gradient(160deg, #3a2008 0%, #2c1804 50%, #1e1002 100%);
+        }
+
+        .card-yellow-bg {
+            position: absolute;
+            inset: 15px;
+            clip-path: polygon(0% 15px, 5px 15px, 5px 10px, 10px 10px, 10px 5px, 15px 5px, 15px 0%,
+                    calc(100% - 15px) 0%, calc(100% - 15px) 5px, calc(100% - 10px) 5px,
+                    calc(100% - 10px) 10px, calc(100% - 5px) 10px, calc(100% - 5px) 15px, 100% 15px,
+                    100% calc(100% - 15px), calc(100% - 5px) calc(100% - 15px),
+                    calc(100% - 5px) calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
+                    calc(100% - 10px) calc(100% - 5px), calc(100% - 15px) calc(100% - 5px),
+                    calc(100% - 15px) 100%, 15px 100%, 15px calc(100% - 5px), 10px calc(100% - 5px),
+                    10px calc(100% - 10px), 5px calc(100% - 10px), 5px calc(100% - 15px), 0% calc(100% - 15px));
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 3px), repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0, 0, 0, 0.025) 5px, rgba(0, 0, 0, 0.025) 6px), linear-gradient(160deg, #3a2008 0%, #2c1804 50%, #1e1002 100%);
+        }
+
+        .card-green-bg {
+            position: absolute;
+            inset: 15px;
+            clip-path: polygon(0% 15px, 5px 15px, 5px 10px, 10px 10px, 10px 5px, 15px 5px, 15px 0%,
+                    calc(100% - 15px) 0%, calc(100% - 15px) 5px, calc(100% - 10px) 5px,
+                    calc(100% - 10px) 10px, calc(100% - 5px) 10px, calc(100% - 5px) 15px, 100% 15px,
+                    100% calc(100% - 15px), calc(100% - 5px) calc(100% - 15px),
+                    calc(100% - 5px) calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
+                    calc(100% - 10px) calc(100% - 5px), calc(100% - 15px) calc(100% - 5px),
+                    calc(100% - 15px) 100%, 15px 100%, 15px calc(100% - 5px), 10px calc(100% - 5px),
+                    10px calc(100% - 10px), 5px calc(100% - 10px), 5px calc(100% - 15px), 0% calc(100% - 15px));
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 3px), repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0, 0, 0, 0.025) 5px, rgba(0, 0, 0, 0.025) 6px), linear-gradient(160deg, #3a2008 0%, #2c1804 50%, #1e1002 100%);
+        }
+
+        .card-content {
+            background: #FFFFFF;
+            width: calc(100% - 20px);
+            height: 160px;
+            margin: 10px 0 14px;
+            clip-path: polygon(0% 12px, 4px 12px, 4px 8px, 8px 8px, 8px 4px, 12px 4px, 12px 0%,
+                    calc(100% - 12px) 0%, calc(100% - 12px) 4px, calc(100% - 8px) 4px,
+                    calc(100% - 8px) 8px, calc(100% - 4px) 8px, calc(100% - 4px) 12px, 100% 12px,
+                    100% calc(100% - 12px), calc(100% - 4px) calc(100% - 12px),
+                    calc(100% - 4px) calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+                    calc(100% - 8px) calc(100% - 4px), calc(100% - 12px) calc(100% - 4px),
+                    calc(100% - 12px) 100%, 12px 100%, 12px calc(100% - 4px), 8px calc(100% - 4px),
+                    8px calc(100% - 8px), 4px calc(100% - 8px), 4px calc(100% - 12px), 0% calc(100% - 12px));
+            box-shadow: 0 0 0 5px var(--gold-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            z-index: 2;
+            position: relative;
+        }
+
+        .card-content::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.3));
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-title {
+            font-family: 'Jersey 25', cursive;
+            font-size: 26px;
+            color: var(--gold);
+            margin: 0 0 8px;
+            text-transform: capitalize;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            z-index: 2;
+        }
+
+        .card-description {
+            font-family: 'Nunito', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #f0deb0;
+            line-height: 1.4;
+            text-align: center;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+            padding: 0 10px;
+            z-index: 2;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .carousel-btn {
+            background: var(--gold);
+            border: 3px solid #000;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 22px;
+            transition: all 0.15s steps(2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            box-shadow: 3px 3px 0 var(--red-dark);
+            clip-path: polygon(0% 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0%,
+                    calc(100% - 6px) 0%, calc(100% - 6px) 3px, calc(100% - 3px) 3px,
+                    calc(100% - 3px) 6px, 100% 6px, 100% calc(100% - 6px),
+                    calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px),
+                    calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%,
+                    6px 100%, 6px calc(100% - 3px), 3px calc(100% - 3px),
+                    3px calc(100% - 6px), 0% calc(100% - 6px));
+        }
+
+        .carousel-btn:hover {
+            background: var(--gold-deep);
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0 var(--red-dark);
+        }
+
+        .carousel-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 var(--red-dark);
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 215, 0, 0.3);
+            border: 2px solid var(--gold);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .carousel-dot.active {
+            background: var(--gold);
+        }
+
+        /* ===== GRID SECTIONS (Kagamitan, Materyales, etc.) ===== */
+        .kagamitan-section,
+        .materyales-section,
+        .proseso-section,
+        .gampanin-section,
+        .detail-section {
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 110px 5% 60px;
+            background-color: transparent;
+            background: rgba(20, 10, 0, 0.0);
+            position: relative;
+        }
+
+        body.dark-mode .kagamitan-section,
+        body.dark-mode .materyales-section,
+        body.dark-mode .proseso-section,
+        body.dark-mode .gampanin-section,
+        body.dark-mode .detail-section {
+            background-color: rgba(10, 6, 1, 0.8);
+        }
+
+        .kagamitan-header,
+        .materyales-header,
+        .proseso-header,
+        .gampanin-header,
+        .detail-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .kagamitan-title,
+        .materyales-title,
+        .proseso-title,
+        .gampanin-title,
+        .detail-title {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(38px, 7vw, 72px);
+            color: #FFDA44;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0 #5a0000, 4px 4px 0 rgba(0, 0, 0, 0.5);
+            margin: 0;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* ===== SEARCH BAR ===== */
+        .search-container {
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            color: var(--gold);
+            font-size: 18px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            background: var(--search-bg);
+            border: 3px solid var(--gold-dark);
+            color: var(--text-on-dark);
+            outline: none;
+            letter-spacing: 0.5px;
+            transition: border-color 0.2s, background 0.2s;
+            clip-path: polygon(0% 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0%,
+                    calc(100% - 8px) 0%, calc(100% - 8px) 4px, calc(100% - 4px) 4px,
+                    calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px),
+                    calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px),
+                    calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
+                    8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px),
+                    4px calc(100% - 8px), 0% calc(100% - 8px));
+        }
+
+        .search-input::placeholder {
+            color: rgba(240, 210, 160, 0.5);
+        }
+
+        .search-input:focus {
+            border-color: var(--gold);
+            background: rgba(40, 20, 0, 0.7);
+        }
+
+        .search-count {
+            font-family: 'Jersey 25', cursive;
+            font-size: 16px;
+            color: rgba(255, 215, 0, 0.6);
+            margin-top: 8px;
+            padding-left: 4px;
+        }
+
+        /* ===== WORD GRID ===== */
+        .kagamitan-grid,
+        .materyales-grid,
+        .proseso-grid,
+        .gampanin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 18px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .kagamitan-button {
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 3px),
+                repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(0, 0, 0, 0.025) 6px, rgba(0, 0, 0, 0.025) 7px),
+                linear-gradient(180deg, #e8c870 0%, #c8a040 50%, #a87820 100%);
+            border: 4px solid #6a4010;
+            padding: 22px 14px;
+            font-family: 'Jersey 25', cursive;
+            font-size: 20px;
+            color: #1e0e00;
+            cursor: pointer;
+            transition: all 0.15s steps(2);
+            text-shadow: 1px 1px 0 rgba(255, 240, 200, 0.4);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2), 0 6px 0 0 #6a3a08, 0 8px 0 0 #4a2004, 0 10px 15px rgba(0, 0, 0, 0.35);
+            position: relative;
+            overflow: hidden;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 600;
+            clip-path: polygon(0% 10px, 5px 10px, 5px 5px, 10px 5px, 10px 0%,
+                    calc(100% - 10px) 0%, calc(100% - 10px) 5px, calc(100% - 5px) 5px,
+                    calc(100% - 5px) 10px, 100% 10px, 100% calc(100% - 10px),
+                    calc(100% - 5px) calc(100% - 10px), calc(100% - 5px) calc(100% - 5px),
+                    calc(100% - 10px) calc(100% - 5px), calc(100% - 10px) 100%,
+                    10px 100%, 10px calc(100% - 5px), 5px calc(100% - 5px),
+                    5px calc(100% - 10px), 0% calc(100% - 10px));
+        }
+
+        /* Staple decorations on word buttons */
+        .kagamitan-button::after {
+            content: '▬ ▬';
+            position: absolute;
+            top: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 7px;
+            color: rgba(80, 40, 0, 0.4);
+            letter-spacing: 4px;
+            z-index: 3;
+        }
+
+        .kagamitan-button::before {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            background: linear-gradient(180deg, #FFDA44 0%, #FFDA44 50%, #FFDA44 100%);
+            clip-path: polygon(0% 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0%,
+                    calc(100% - 6px) 0%, calc(100% - 6px) 3px, calc(100% - 3px) 3px,
+                    calc(100% - 3px) 6px, 100% 6px, 100% calc(100% - 6px),
+                    calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px),
+                    calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%,
+                    6px 100%, 6px calc(100% - 3px), 3px calc(100% - 3px),
+                    3px calc(100% - 6px), 0% calc(100% - 6px));
+            z-index: 1;
+        }
+
+        .kagamitan-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.4), 0 10px 0 0 #6a3a08, 0 12px 0 0 #4a2004, 0 15px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .kagamitan-button:active {
+            transform: translateY(-2px);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15), 0 4px 0 0 #6a3a08, 0 6px 0 0 #4a2004, 0 8px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .kagamitan-button>span {
+            position: relative;
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: clamp(15px, 2.5vw, 19px);
+            color: #1e0e00;
+            text-shadow: 1px 1px 0 rgba(255, 230, 160, 0.5);
+        }
+
+        .kagamitan-button.hidden {
+            display: none;
+        }
+
+        /* No results message */
+        .no-results {
+            font-family: 'Jersey 25', cursive;
+            font-size: 28px;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            padding: 40px;
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* ===== BACK BUTTON ===== */
+        .back-button {
+            background: var(--gold);
+            border: 3px solid #000;
+            padding: 12px 26px;
+            font-family: 'Jersey 25', cursive;
+            font-size: 18px;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.15s steps(2);
+            white-space: nowrap;
+            font-weight: 600;
+            box-shadow: 3px 3px 0 var(--red-dark), 6px 6px 0 var(--red-deep), 0 0 0 3px #000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            clip-path: polygon(0% 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0%,
+                    calc(100% - 6px) 0%, calc(100% - 6px) 3px, calc(100% - 3px) 3px,
+                    calc(100% - 3px) 6px, 100% 6px, 100% calc(100% - 6px),
+                    calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px),
+                    calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%,
+                    6px 100%, 6px calc(100% - 3px), 3px calc(100% - 3px),
+                    3px calc(100% - 6px), 0% calc(100% - 6px));
+        }
+
+        .back-button:hover {
+            background: var(--gold-deep);
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--red-dark), 8px 8px 0 var(--red-deep), 0 0 0 3px #000;
+        }
+
+        /* ===== DETAIL CARD ===== */
+        .detail-card {
+            width: 100%;
+            max-width: 820px;
+            height: auto;
+            min-height: 700px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: linear-gradient(160deg, #FFDA44 0%, #ffffff 55%, #FFDA44 100%);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15), 0 8px 0 0 var(--red), 0 12px 0 0 var(--red-dark), 0 16px 25px rgba(0, 0, 0, 0.4);
+            margin-bottom: 40px;
+            animation: cardEntrance 0.4s ease;
+        }
+
+        @keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .detail-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: inherit;
+            clip-path: polygon(0% 20px, 6px 20px, 6px 14px, 14px 14px, 14px 6px, 20px 6px, 20px 0%,
+                    calc(100% - 20px) 0%, calc(100% - 20px) 6px, calc(100% - 14px) 6px,
+                    calc(100% - 14px) 14px, calc(100% - 6px) 14px, calc(100% - 6px) 20px, 100% 20px,
+                    100% calc(100% - 20px), calc(100% - 6px) calc(100% - 20px),
+                    calc(100% - 6px) calc(100% - 14px), calc(100% - 14px) calc(100% - 14px),
+                    calc(100% - 14px) calc(100% - 6px), calc(100% - 20px) calc(100% - 6px),
+                    calc(100% - 20px) 100%, 20px 100%, 20px calc(100% - 6px), 14px calc(100% - 6px),
+                    14px calc(100% - 14px), 6px calc(100% - 14px), 6px calc(100% - 20px), 0% calc(100% - 20px));
+        }
+
+        .detail-card-inner {
+            width: 100%;
+            height: 100%;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .detail-card-bg {
+            position: absolute;
+            inset: 15px;
+            clip-path: polygon(0% 15px, 5px 15px, 5px 10px, 10px 10px, 10px 5px, 15px 5px, 15px 0%,
+                    calc(100% - 15px) 0%, calc(100% - 15px) 5px, calc(100% - 10px) 5px,
+                    calc(100% - 10px) 10px, calc(100% - 5px) 10px, calc(100% - 5px) 15px, 100% 15px,
+                    100% calc(100% - 15px), calc(100% - 5px) calc(100% - 15px),
+                    calc(100% - 5px) calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
+                    calc(100% - 10px) calc(100% - 5px), calc(100% - 15px) calc(100% - 5px),
+                    calc(100% - 15px) 100%, 15px 100%, 15px calc(100% - 5px), 10px calc(100% - 5px),
+                    10px calc(100% - 10px), 5px calc(100% - 10px), 5px calc(100% - 15px), 0% calc(100% - 15px));
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 3px),
+                repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0, 0, 0, 0.025) 5px, rgba(0, 0, 0, 0.025) 6px),
+                linear-gradient(160deg, #3a2008 0%, #2c1804 50%, #1e1002 100%);
+
+        }
+
+        .detail-term {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(28px, 5vw, 46px);
+            color: #f0deb0;
+            margin: 0 0 16px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+            text-align: center;
+            z-index: 2;
+            width: 100%;
+            word-wrap: break-word;
+            padding: 0 12px;
+        }
+
+        /* ===== AUDIO BUTTON (prominent, clearly labeled) ===== */
+        .audio-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            border: 2px solid var(--audio-bg);
+            padding: 7px 14px 7px 10px;
+            background: var(--audio-bg);
+            color: var(--audio-text);
+            border-radius: 0;
+            margin-left: 12px;
+            flex-shrink: 0;
+            font-family: 'Nunito', sans-serif;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            clip-path: polygon(0% 5px, 3px 5px, 3px 2px, 5px 2px, 5px 0%,
+                    calc(100% - 5px) 0%, calc(100% - 5px) 2px, calc(100% - 3px) 2px,
+                    calc(100% - 3px) 5px, 100% 5px, 100% calc(100% - 5px),
+                    calc(100% - 3px) calc(100% - 5px), calc(100% - 3px) calc(100% - 2px),
+                    calc(100% - 5px) calc(100% - 2px), calc(100% - 5px) 100%,
+                    5px 100%, 5px calc(100% - 2px), 3px calc(100% - 2px),
+                    3px calc(100% - 5px), 0% calc(100% - 5px));
+            box-shadow: 2px 2px 0 var(--red-deep);
+        }
+
+        .audio-icon::before {
+            content: '';
+            font-size: 15px;
+            line-height: 1;
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            display: inline-block;
+        }
+
+        .audio-icon::before {
+            content: '\f028';
+        }
+
+        .audio-icon:hover {
+            background: var(--audio-hover);
+            border-color: var(--audio-hover);
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0 var(--red-deep);
+        }
+
+        .audio-icon svg {
+            display: none;
+        }
+
+        .audio-icon.playing {
+            background: #1a6b40;
+            border-color: #145530;
+            animation: pulse 0.8s ease infinite;
+            box-shadow: 2px 2px 0 #0a3320;
+        }
+
+        .audio-icon.playing::before {
+            content: '\f028';
+            animation: wave 0.5s steps(2) infinite alternate;
+        }
+
+        @keyframes wave {
+            to {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        /* ===== VIDEO BOX ===== */
+        .video-box {
+            background: #000;
+            width: calc(100% - 30px);
+            height: 300px;
+            margin: 0 0 22px;
+            clip-path: polygon(0% 12px, 4px 12px, 4px 8px, 8px 8px, 8px 4px, 12px 4px, 12px 0%,
+                    calc(100% - 12px) 0%, calc(100% - 12px) 4px, calc(100% - 8px) 4px,
+                    calc(100% - 8px) 8px, calc(100% - 4px) 8px, calc(100% - 4px) 12px, 100% 12px,
+                    100% calc(100% - 12px), calc(100% - 4px) calc(100% - 12px),
+                    calc(100% - 4px) calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+                    calc(100% - 8px) calc(100% - 4px), calc(100% - 12px) calc(100% - 4px),
+                    calc(100% - 12px) 100%, 12px 100%, 12px calc(100% - 4px), 8px calc(100% - 4px),
+                    8px calc(100% - 8px), 4px calc(100% - 8px), 4px calc(100% - 12px), 0% calc(100% - 12px));
+            box-shadow: 0 0 0 6px var(--gold-dark), 0 0 0 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Jersey 25', cursive;
+            font-size: 18px;
+            text-align: center;
+            padding: 0 10px;
+            gap: 12px;
+        }
+
+        .video-placeholder svg {
+            width: 54px;
+            height: 54px;
+            fill: rgba(255, 215, 0, 0.5);
+        }
+
+        .video-placeholder span {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        .detail-video,
+        .detail-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== DETAIL CONTENT ===== */
+        .detail-content {
+            width: calc(100% - 30px);
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            z-index: 2;
+        }
+
+        .detail-section-with-audio {
+            position: relative;
+            margin-bottom: 22px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 14px;
+            clip-path: polygon(0% 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0%,
+                    calc(100% - 6px) 0%, calc(100% - 6px) 3px, calc(100% - 3px) 3px,
+                    calc(100% - 3px) 6px, 100% 6px, 100% calc(100% - 6px),
+                    calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px),
+                    calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%,
+                    6px 100%, 6px calc(100% - 3px), 3px calc(100% - 3px),
+                    3px calc(100% - 6px), 0% calc(100% - 6px));
+            border-left: 4px solid rgba(255, 215, 0, 0.4);
+        }
+
+        .detail-section-title {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(20px, 3.5vw, 30px);
+            color: var(--gold);
+            margin: 0 0 10px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .detail-text {
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(15px, 2.2vw, 20px);
+            font-weight: 600;
+            color: #f0deb0;
+            line-height: 1.7;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ===== KASAYSAYAN SECTION ===== */
+        .kasaysayan-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 5%;
+            background-color: transparent;
+            background: rgba(20, 10, 0, 0.0);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Cardboard edge decoration on kasaysayan 
+        .kasaysayan-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(90deg,
+                    #6a4010 0px, #6a4010 20px,
+                    #8a5820 20px, #8a5820 40px);
+            opacity: 0.6;
+        }
+
+        .kasaysayan-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(90deg,
+                    #8a5820 0px, #8a5820 20px,
+                    #6a4010 20px, #6a4010 40px);
+            opacity: 0.6;
+        }*/
+
+        .kasaysayan-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 40px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .kasaysayan-title {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(40px, 8vw, 80px);
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 0 var(--red-dark), 5px 5px 0 rgba(0, 0, 0, 0.2);
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .kasaysayan-content {
+            max-width: 1200px;
+            width: 100%;
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 3px),
+                repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0, 0, 0, 0.025) 5px, rgba(0, 0, 0, 0.025) 6px),
+                linear-gradient(160deg, #3a2008 0%, #2c1804 50%, #1e1002 100%);
+            border: 5px solid var(--gold-dark);
+            clip-path: polygon(0% 14px, 7px 14px, 7px 7px, 14px 7px, 14px 0%,
+                    calc(100% - 14px) 0%, calc(100% - 14px) 7px, calc(100% - 7px) 7px,
+                    calc(100% - 7px) 14px, 100% 14px, 100% calc(100% - 14px),
+                    calc(100% - 7px) calc(100% - 14px), calc(100% - 7px) calc(100% - 7px),
+                    calc(100% - 14px) calc(100% - 7px), calc(100% - 14px) 100%,
+                    14px 100%, 14px calc(100% - 7px), 7px calc(100% - 7px),
+                    7px calc(100% - 14px), 0% calc(100% - 14px));
+            padding: 34px 36px;
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(16px, 2.5vw, 21px);
+            color: #f0deb0;
+            box-shadow: 0 8px 0 0 var(--red-dark), 6px 6px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 220, 120, 0.1);
+            line-height: 1.75;
+            margin-bottom: 30px;
+            position: relative;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+
+        /* Kasaysayan section dividers */
+        .kasaysayan-content .kasaysayan-subtitle {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(18px, 3vw, 26px);
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 24px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px dashed rgba(212, 148, 10, 0.4);
+        }
+
+        .kasaysayan-content .kasaysayan-subtitle::before {
+            content: '';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            content: '\f101';
+            font-size: 14px;
+            color: var(--red);
+        }
+
+        .language-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .language-tag {
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.06) 2px, rgba(0, 0, 0, 0.06) 3px),
+                linear-gradient(160deg, rgba(212, 148, 10, 0.22), rgba(140, 90, 0, 0.16));
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            padding: 6px 16px;
+            font-family: 'Jersey 25', cursive;
+            font-size: 17px;
+            color: var(--gold);
+            letter-spacing: 1px;
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.25);
+            clip-path: polygon(0% 5px, 3px 5px, 3px 2px, 5px 2px, 5px 0%, calc(100% - 5px) 0%, calc(100% - 5px) 2px, calc(100% - 3px) 2px, calc(100% - 3px) 5px, 100% 5px, 100% calc(100% - 5px), calc(100% - 3px) calc(100% - 5px), calc(100% - 3px) calc(100% - 2px), calc(100% - 5px) calc(100% - 2px), calc(100% - 5px) 100%, 5px 100%, 5px calc(100% - 2px), 3px calc(100% - 2px), 3px calc(100% - 5px), 0% calc(100% - 5px));
+        }
+
+        /* ===== DARK MODE: KASAYSAYAN SECTION ===== */
+        body.dark-mode .kasaysayan-section {
+            background-color: rgba(8, 5, 1, 0.8);
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0, 0, 0, 0.1) 3px, rgba(0, 0, 0, 0.1) 4px);
+        }
+
+        body.dark-mode .kasaysayan-content {
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 3px),
+                repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0, 0, 0, 0.06) 5px, rgba(0, 0, 0, 0.06) 6px),
+                linear-gradient(160deg, #1c1004 0%, #140c02 50%, #0c0800 100%);
+            color: #e8d5a8;
+        }
+
+        body.dark-mode .stat-box {
+            background: rgba(10, 5, 0, 0.8);
+        }
+
+        /* ===== STATS ROW ===== */
+        .stats-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 30px;
+            margin-top: 15px;
+        }
+
+        .stat-box {
+            background: rgba(30, 15, 0, 0.65);
+            border: 3px solid var(--gold-dark);
+            padding: 16px 28px;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            max-width: 200px;
+            clip-path: polygon(0% 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0%,
+                    calc(100% - 8px) 0%, calc(100% - 8px) 4px, calc(100% - 4px) 4px,
+                    calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px),
+                    calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px),
+                    calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
+                    8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px),
+                    4px calc(100% - 8px), 0% calc(100% - 8px));
+        }
+
+        .stat-number {
+            font-family: 'Jersey 25', cursive;
+            font-size: 36px;
+            color: #FFD740;
+            line-height: 1;
+            text-shadow: 2px 2px 0 #5a0000;
+        }
+
+        .stat-label {
+            font-family: 'Nunito', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(255, 240, 190, 0.9);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-right {
+                display: none;
+            }
+
+            .mobile-menu.active {
+                display: flex;
+            }
+
+            .hero {
+                padding: 0 25px;
+            }
+
+            .hero h1 {
+                font-size: clamp(60px, 18vw, 110px);
+            }
+
+            .hero p {
+                font-size: clamp(16px, 4vw, 22px);
+            }
+
+            .carousel-section,
+            .kasaysayan-section {
+                padding: 60px 15px;
+            }
+
+            .section-heading {
+                font-size: clamp(28px, 8vw, 48px);
+            }
+
+            .carousel-card {
+                min-width: 220px;
+                height: 330px;
+                margin: 0 8px;
+            }
+
+            .kagamitan-grid,
+            .materyales-grid,
+            .proseso-grid,
+            .gampanin-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .kagamitan-header,
+            .materyales-header,
+            .proseso-header,
+            .gampanin-header,
+            .detail-header,
+            .kasaysayan-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .kagamitan-title,
+            .materyales-title,
+            .proseso-title,
+            .gampanin-title,
+            .detail-title,
+            .kasaysayan-title {
+                font-size: clamp(30px, 7vw, 50px);
+                text-align: center;
+            }
+
+            .detail-card {
+                min-height: 580px;
+            }
+
+            .video-box {
+                height: 230px;
+            }
+
+            .stats-row {
+                gap: 12px;
+            }
+
+            .stat-box {
+                padding: 12px 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 0 18px;
+            }
+
+            .hero h1 {
+                font-size: 72px;
+                letter-spacing: 1px;
+            }
+
+            .hero p {
+                font-size: 20px;
+                line-height: 1.5;
+            }
+
+            .carousel-card {
+                min-width: 200px;
+                height: 310px;
+            }
+
+            .kagamitan-section,
+            .materyales-section,
+            .proseso-section,
+            .gampanin-section,
+            .detail-section {
+                padding: 100px 4% 50px;
+            }
+
+            .mobile-menu {
+                width: 88%;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .hero h1 {
+                font-size: 58px;
+            }
+
+            .carousel-card {
+                min-width: 180px;
+                height: 290px;
+            }
+        }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding-top: 80px;
+                padding-bottom: 40px;
+            }
+
+            .hero h1 {
+                margin-top: 20px;
+            }
+
+            .carousel-section,
+            .kasaysayan-section {
+                min-height: auto;
+                padding: 60px 20px;
+            }
+        }
+
+        /* ===== AUDIO HINT BANNER in detail ===== */
+        .audio-hint-banner {
+            background: rgba(73, 49, 11, 0.718);
+            border: 2px solid #9b6226;
+            padding: 8px 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #f0c980;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            clip-path: polygon(0% 5px, 3px 5px, 3px 2px, 5px 2px, 5px 0%, calc(100% - 5px) 0%, calc(100% - 5px) 2px, calc(100% - 3px) 2px, calc(100% - 3px) 5px, 100% 5px, 100% calc(100% - 5px), calc(100% - 3px) calc(100% - 5px), calc(100% - 3px) calc(100% - 2px), calc(100% - 5px) calc(100% - 2px), calc(100% - 5px) 100%, 5px 100%, 5px calc(100% - 2px), 3px calc(100% - 2px), 3px calc(100% - 5px), 0% calc(100% - 5px));
+            width: 100%;
+        }
+
+        @media (max-width: 480px) {
+            .audio-hint-banner {
+                font-size: 12px;
+                padding: 10px 12px;
+                justify-content: center;
+                text-align: center;
+                line-height: 1.6;
+                gap: 4px;
+            }
+
+            .audio-hint-banner i {
+                font-size: 14px;
+            }
+
+            .audio-hint-banner strong {
+                white-space: nowrap;
+            }
+        }
+
+        /* Audio indicator removed from word buttons */
+
+        /* ===== PROGRESS INDICATOR ===== */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--red), var(--gold));
+            z-index: 10000;
+            transition: width 0.1s linear;
+            width: 0%;
+        }
+
+        /* ===== SOUND CONTROL ===== */
+        .sound-control {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .sound-btn {
+            background: var(--nav-bg);
+            border: 3px solid var(--gold);
+            color: var(--gold);
+            font-family: 'Jersey 25', cursive;
+            font-size: 18px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            clip-path: polygon(0% 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0%,
+                    calc(100% - 8px) 0%, calc(100% - 8px) 4px, calc(100% - 4px) 4px,
+                    calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px),
+                    calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px),
+                    calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
+                    8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px),
+                    4px calc(100% - 8px), 0% calc(100% - 8px));
+            transition: all 0.15s steps(2);
+            box-shadow: 3px 3px 0 var(--red-dark);
+        }
+
+        .sound-btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0 var(--red-dark);
+        }
+
+        .sound-btn.muted {
+            border-color: rgba(255, 215, 0, 0.4);
+            color: rgba(255, 215, 0, 0.4);
+        }
+
+        .sound-panel {
+            display: none;
+            background: var(--nav-bg);
+            border: 3px solid var(--gold);
+            padding: 16px;
+            clip-path: polygon(0% 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0%,
+                    calc(100% - 8px) 0%, calc(100% - 8px) 4px, calc(100% - 4px) 4px,
+                    calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px),
+                    calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px),
+                    calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
+                    8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px),
+                    4px calc(100% - 8px), 0% calc(100% - 8px));
+            box-shadow: 4px 4px 0 var(--red-dark);
+            min-width: 180px;
+        }
+
+        .sound-panel.open {
+            display: block;
+        }
+
+        .sound-panel-title {
+            font-family: 'Jersey 25', cursive;
+            font-size: 14px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-align: center;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 8px;
+        }
+
+        .volume-options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .vol-btn {
+            background: transparent;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Jersey 25', cursive;
+            font-size: 14px;
+            padding: 8px 12px;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 1px;
+            transition: all 0.15s steps(2);
+        }
+
+        .vol-btn:hover,
+        .vol-btn.active {
+            background: rgba(255, 215, 0, 0.12);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .vol-btn .vol-icon {
+            width: 18px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .vol-bar {
+            display: flex;
+            gap: 3px;
+            margin-left: auto;
+        }
+
+        .vol-bar span {
+            display: inline-block;
+            width: 5px;
+            height: 12px;
+            background: rgba(255, 215, 0, 0.25);
+        }
+
+        .vol-btn.active .vol-bar span,
+        .vol-btn:hover .vol-bar span {
+            background: var(--gold);
+        }
+
+        .vol-bar.low span:nth-child(2),
+        .vol-bar.low span:nth-child(3) {
+            opacity: 0.2;
+        }
+
+        .vol-bar.mid span:nth-child(3) {
+            opacity: 0.2;
+        }
+
+        @media (max-width: 480px) {
+            .sound-control {
+                bottom: 16px;
+                right: 16px;
+            }
+        }
+
+        /* ===== DARK MODE TOGGLE ===== */
+        .dark-mode-btn {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            font-family: 'Jersey 25', cursive;
+            font-size: 16px;
+            padding: 7px 14px;
+            cursor: pointer;
+            transition: all 0.15s steps(2);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            clip-path: polygon(0% 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0%,
+                    calc(100% - 6px) 0%, calc(100% - 6px) 3px, calc(100% - 3px) 3px,
+                    calc(100% - 3px) 6px, 100% 6px, 100% calc(100% - 6px),
+                    calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px),
+                    calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%,
+                    6px 100%, 6px calc(100% - 3px), 3px calc(100% - 3px),
+                    3px calc(100% - 6px), 0% calc(100% - 6px));
+        }
+
+        .dark-mode-btn:hover {
+            background: rgba(180, 120, 20, 0.2);
+            box-shadow: 2px 2px 0 var(--gold-deep);
+        }
+
+        body.dark-mode .dark-mode-btn {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* ===== WORD OF THE DAY ===== */
+        .wotd-section {
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0, 0, 0, 0.05) 3px, rgba(0, 0, 0, 0.05) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(0, 0, 0, 0.03) 6px, rgba(0, 0, 0, 0.03) 7px),
+                linear-gradient(135deg, rgba(30, 14, 2, 0.92), rgba(46, 24, 4, 0.97));
+            border: 3px solid var(--gold);
+            padding: 28px 32px;
+            margin: 0 auto 0;
+            max-width: 900px;
+            position: relative;
+            clip-path: polygon(0% 12px, 6px 12px, 6px 6px, 12px 6px, 12px 0%, calc(100% - 12px) 0%, calc(100% - 12px) 6px, calc(100% - 6px) 6px, calc(100% - 6px) 12px, 100% 12px, 100% calc(100% - 12px), calc(100% - 6px) calc(100% - 12px), calc(100% - 6px) calc(100% - 6px), calc(100% - 12px) calc(100% - 6px), calc(100% - 12px) 100%, 12px 100%, 12px calc(100% - 6px), 6px calc(100% - 6px), 6px calc(100% - 12px), 0% calc(100% - 12px));
+            box-shadow: 4px 4px 0 var(--red-dark), 0 0 0 1px rgba(0, 0, 0, 0.3);
+            width: 90%;
+        }
+
+        .wotd-label {
+            font-family: 'Jersey 25', cursive;
+            font-size: 13px;
+            color: var(--red);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .wotd-label::before {
+            content: '\f005';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--gold);
+            font-size: 12px;
+        }
+
+        .wotd-term {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(28px, 5vw, 40px);
+            color: var(--gold);
+            text-shadow: 2px 2px 0 var(--red-dark);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .wotd-def {
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(15px, 2vw, 19px);
+            color: #f0deb0;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .wotd-category {
+            display: inline-block;
+            font-family: 'Jersey 25', cursive;
+            font-size: 13px;
+            padding: 4px 14px;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .wotd-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .wotd-btn {
+            font-family: 'Jersey 25', cursive;
+            font-size: 15px;
+            padding: 8px 18px;
+            cursor: pointer;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            background: transparent;
+            transition: all 0.15s steps(2);
+            letter-spacing: 1px;
+        }
+
+        .wotd-btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+        }
+
+        /* ===== FLASHCARD MODE ===== */
+        .flashcard-section {
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 110px 5% 80px;
+            background-color: transparent;
+            position: relative;
+        }
+
+        .flashcard-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(20, 10, 0, 0.0);
+            pointer-events: none;
+        }
+
+        body.dark-mode .flashcard-section::before {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .flashcard-section>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .flashcard-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .flashcard-title {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(28px, 5vw, 48px);
+            color: var(--gold);
+            text-shadow: 3px 3px 0 var(--red);
+        }
+
+        .flashcard-progress-info {
+            font-family: 'Jersey 25', cursive;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .flashcard-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .fc-filter-btn {
+            font-family: 'Jersey 25', cursive;
+            font-size: 15px;
+            padding: 8px 20px;
+            border: 2px solid rgba(255, 215, 0, 0.35);
+            color: #291501;
+            background: transparent;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.15s steps(2);
+        }
+
+        body.dark-mode .fc-filter-btn {
+            color: #f0deb0;
+        }
+
+        .fc-filter-btn.active,
+        .fc-filter-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .flashcard-arena {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .flashcard-scene {
+            width: 100%;
+            height: 320px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flashcard-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .flashcard-inner.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            clip-path: polygon(0% 16px, 6px 16px, 6px 10px, 10px 10px, 10px 6px, 16px 6px, 16px 0%, calc(100% - 16px) 0%, calc(100% - 16px) 6px, calc(100% - 10px) 6px, calc(100% - 10px) 10px, calc(100% - 6px) 10px, calc(100% - 6px) 16px, 100% 16px, 100% calc(100% - 16px), calc(100% - 6px) calc(100% - 16px), calc(100% - 6px) calc(100% - 10px), calc(100% - 10px) calc(100% - 10px), calc(100% - 10px) calc(100% - 6px), calc(100% - 16px) calc(100% - 6px), calc(100% - 16px) 100%, 16px 100%, 16px calc(100% - 6px), 10px calc(100% - 6px), 10px calc(100% - 10px), 6px calc(100% - 10px), 6px calc(100% - 16px), 0% calc(100% - 16px));
+        }
+
+        .flashcard-front {
+            background: linear-gradient(160deg, #c87a08 0%, #a05e00 55%, #7a4000 100%);
+            box-shadow:
+                0 0 0 3px rgba(200, 120, 8, 0.5),
+                0 0 0 5px rgba(0, 0, 0, 0.25),
+                0 8px 0 0 #5a2200,
+                0 12px 0 0 #3d1400,
+                0 16px 25px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 210, 100, 0.25);
+        }
+
+        .flashcard-back {
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 3px), repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0, 0, 0, 0.025) 5px, rgba(0, 0, 0, 0.025) 6px), linear-gradient(160deg, #3a2008 0%, #2c1804 50%, #1e1002 100%);
+            box-shadow:
+                0 0 0 3px rgba(155, 40, 40, 0.5),
+                0 0 0 5px rgba(0, 0, 0, 0.25),
+                0 8px 0 0 #4e0a0a,
+                0 12px 0 0 #330505,
+                0 16px 25px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 140, 140, 0.15);
+            transform: rotateY(180deg);
+        }
+
+        .fc-hint {
+            font-family: 'Nunito', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 220, 160, 0.55);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .fc-back-hint {
+            font-family: 'Nunito', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .fc-term {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(28px, 5vw, 44px);
+            color: #fff;
+            text-align: center;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
+            word-break: break-word;
+        }
+
+        .fc-category-tag {
+            font-family: 'Jersey 25', cursive;
+            font-size: 13px;
+            color: rgba(255, 210, 140, 0.5);
+            letter-spacing: 2px;
+            margin-top: 14px;
+        }
+
+        .fc-definition {
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(15px, 2.2vw, 19px);
+            color: #f0deb0;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .fc-usage {
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            line-height: 1.5;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .flashcard-controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .fc-btn {
+            font-family: 'Jersey 25', cursive;
+            font-size: 16px;
+            padding: 12px 24px;
+            border: 2px solid;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.15s steps(2);
+            clip-path: polygon(0% 5px, 3px 5px, 3px 2px, 5px 2px, 5px 0%, calc(100% - 5px) 0%, calc(100% - 5px) 2px, calc(100% - 3px) 2px, calc(100% - 3px) 5px, 100% 5px, 100% calc(100% - 5px), calc(100% - 3px) calc(100% - 5px), calc(100% - 3px) calc(100% - 2px), calc(100% - 5px) calc(100% - 2px), calc(100% - 5px) 100%, 5px 100%, 5px calc(100% - 2px), 3px calc(100% - 2px), 3px calc(100% - 5px), 0% calc(100% - 5px));
+        }
+
+        .fc-btn-prev {
+            background: rgba(10, 3, 0, 0.8);
+            border-color: rgba(255, 215, 0, 0.4);
+            color: rgba(255, 215, 0, 0.7);
+        }
+
+        .fc-btn-prev:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .fc-btn-flip {
+            background: var(--gold);
+            border-color: #000;
+            color: #000;
+            box-shadow: 3px 3px 0 var(--red-dark);
+        }
+
+        .fc-btn-flip:hover {
+            background: var(--gold-deep);
+            transform: translate(-1px, -1px);
+        }
+
+        .fc-btn-next {
+            background: var(--red);
+            border-color: var(--red-dark);
+            color: #fff;
+            box-shadow: 3px 3px 0 var(--red-deep);
+        }
+
+        .fc-btn-next:hover {
+            background: var(--red-dark);
+            transform: translate(-1px, -1px);
+        }
+
+        .fc-count {
+            font-family: 'Jersey 25', cursive;
+            font-size: 16px;
+            color: #291501; 
+            text-align: center;
+        }
+
+        .fc-shuffle-btn {
+            font-family: 'Jersey 25', cursive;
+            font-size: 14px;
+            padding: 8px 18px;
+            border: 2px solid #291501;
+            color: #291501;;
+            background: transparent;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.15s steps(2);
+        }
+
+        body.dark-mode .fc-shuffle-btn{
+            color: #f0deb0;
+            border: 2px solid #f0deb0;
+        }
+        body.dark-mode .fc-count{
+            color: #f0deb0;
+        }
+
+        .fc-shuffle-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .fc-done-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+        }
+
+        .fc-done-text {
+            font-family: 'Jersey 25', cursive;
+            font-size: 28px;
+            color: var(--gold);
+            text-shadow: 2px 2px 0 var(--red);
+        }
+
+        .fc-done-sub {
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ===== QUIZ MODE ===== */
+        .quiz-section {
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 110px 5% 80px;
+            background-color: transparent;
+            position: relative;
+        }
+
+        .quiz-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(20, 10, 0, 0.0);
+            pointer-events: none;
+        }
+
+        body.dark-mode .quiz-section::before {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .quiz-section>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .quiz-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .quiz-title {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(28px, 5vw, 48px);
+            color: var(--gold);
+            text-shadow: 3px 3px 0 var(--red);
+        }
+
+        .quiz-score-display {
+            font-family: 'Jersey 25', cursive;
+            font-size: 18px;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-arena {
+            width: 100%;
+            max-width: 680px;
+        }
+
+        .quiz-question-box {
+            background: linear-gradient(160deg, #c87a08 0%, #a05e00 55%, #7a4000 100%);
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            position: relative;
+            clip-path: polygon(0% 16px, 6px 16px, 6px 10px, 10px 10px, 10px 6px, 16px 6px, 16px 0%, calc(100% - 16px) 0%, calc(100% - 16px) 6px, calc(100% - 10px) 6px, calc(100% - 10px) 10px, calc(100% - 6px) 10px, calc(100% - 6px) 16px, 100% 16px, 100% calc(100% - 16px), calc(100% - 6px) calc(100% - 16px), calc(100% - 6px) calc(100% - 10px), calc(100% - 10px) calc(100% - 10px), calc(100% - 10px) calc(100% - 6px), calc(100% - 16px) calc(100% - 6px), calc(100% - 16px) 100%, 16px 100%, 16px calc(100% - 6px), 10px calc(100% - 6px), 10px calc(100% - 10px), 6px calc(100% - 10px), 6px calc(100% - 16px), 0% calc(100% - 16px));
+            box-shadow: 0 8px 0 0 #5a2200, 0 12px 0 0 #3d1400, 0 16px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .quiz-q-label {
+            font-family: 'Jersey 25', cursive;
+            font-size: 13px;
+            color: rgba(255, 220, 160, 0.6);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .quiz-q-num {
+            font-family: 'Jersey 25', cursive;
+            font-size: 14px;
+            color: rgba(255, 220, 160, 0.5);
+            float: right;
+        }
+
+        .quiz-question-text {
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(16px, 2.5vw, 21px);
+            color: rgba(255, 240, 200, 0.97);
+            line-height: 1.6;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-option {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(15px, 2.2vw, 18px);
+            padding: 14px 22px;
+            background: rgba(10, 3, 0, 0.85);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            color: #f0deb0;
+            cursor: pointer;
+            text-align: left;
+            letter-spacing: 0.5px;
+            transition: all 0.15s steps(2);
+            clip-path: polygon(0% 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0%, calc(100% - 6px) 0%, calc(100% - 6px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 6px, 100% 6px, 100% calc(100% - 6px), calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px), calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%, 6px 100%, 6px calc(100% - 3px), 3px calc(100% - 3px), 3px calc(100% - 6px), 0% calc(100% - 6px));
+        }
+
+        .quiz-option:hover:not(:disabled) {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0.08);
+        }
+
+        .quiz-option.correct {
+            border-color: #4CAF50 !important;
+            background: rgba(76, 175, 80, 0.15) !important;
+            color: #81C784 !important;
+        }
+
+        .quiz-option.wrong {
+            border-color: #F44336 !important;
+            background: rgba(244, 67, 54, 0.12) !important;
+            color: #EF9A9A !important;
+        }
+
+        .quiz-option:disabled {
+            cursor: default;
+        }
+
+        .quiz-feedback {
+            font-family: 'Jersey 25', cursive;
+            font-size: 18px;
+            padding: 12px 0;
+            min-height: 36px;
+            text-align: center;
+            letter-spacing: 1px;
+            animation: fadeSlideUp 0.3s ease;
+        }
+
+        .quiz-feedback.correct-fb {
+            color: #81C784;
+        }
+
+        .quiz-feedback.wrong-fb {
+            color: #EF9A9A;
+        }
+
+        .quiz-next-btn {
+            font-family: 'Jersey 25', cursive;
+            font-size: 18px;
+            padding: 14px 36px;
+            background: var(--gold);
+            border: 2px solid #000;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.15s steps(2);
+            box-shadow: 3px 3px 0 var(--red-dark);
+            clip-path: polygon(0% 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0%, calc(100% - 6px) 0%, calc(100% - 6px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 6px, 100% 6px, 100% calc(100% - 6px), calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px), calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%, 6px 100%, 6px calc(100% - 3px), 3px calc(100% - 3px), 3px calc(100% - 6px), 0% calc(100% - 6px));
+            display: none;
+            margin: 0 auto;
+        }
+
+        .quiz-next-btn:hover {
+            background: var(--gold-deep);
+            transform: translate(-1px, -1px);
+        }
+
+        .quiz-result-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .quiz-result-title {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(30px, 6vw, 52px);
+            color: var(--gold);
+            text-shadow: 3px 3px 0 var(--red);
+        }
+
+        .quiz-result-score {
+            font-family: 'Jersey 25', cursive;
+            font-size: clamp(48px, 10vw, 80px);
+            color: #fff;
+            text-shadow: 4px 4px 0 var(--red-dark);
+        }
+
+        .quiz-result-grade {
+            font-family: 'Nunito', sans-serif;
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .quiz-result-btns {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .quiz-progress-bar-outer {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            margin-bottom: 16px;
+        }
+
+        .quiz-progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--red), var(--gold));
+            transition: width 0.4s ease;
+        }
+
+        /* NAV badge */
+        .nav-badge {
+            display: inline-block;
+            background: var(--red);
+            color: #fff;
+            font-family: 'Nunito', sans-serif;
+            font-size: 10px;
+            padding: 1px 5px;
+            margin-left: 4px;
+            vertical-align: middle;
+            animation: blink 2s steps(1) infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Reading progress bar -->
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <!-- Background Sound -->
+    <audio id="bgMusic" loop>
+        <source src="./audio/bgm.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Sound Control Widget -->
+    <div class="sound-control" id="soundControl">
+        <div class="sound-panel" id="soundPanel">
+            <div class="sound-panel-title">■ TUNOG ■</div>
+            <div class="volume-options">
+                <button class="vol-btn" id="volMute" onclick="setVolume('mute')">
+                    <span class="vol-icon"><i class="fas fa-volume-xmark"></i></span> MUTE
+                    <span class="vol-bar mute">
+                        <span></span><span></span><span></span>
+                    </span>
+                </button>
+                <button class="vol-btn" id="volLow" onclick="setVolume('low')">
+                    <span class="vol-icon"><i class="fas fa-volume-off"></i></span> MABABA
+                    <span class="vol-bar low">
+                        <span></span><span></span><span></span>
+                    </span>
+                </button>
+                <button class="vol-btn" id="volMid" onclick="setVolume('mid')">
+                    <span class="vol-icon"><i class="fas fa-volume-low"></i></span> KATAMTAMAN
+                    <span class="vol-bar mid">
+                        <span></span><span></span><span></span>
+                    </span>
+                </button>
+                <button class="vol-btn" id="volHigh" onclick="setVolume('high')">
+                    <span class="vol-icon"><i class="fas fa-volume-high"></i></span> MALAKAS
+                    <span class="vol-bar high">
+                        <span></span><span></span><span></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <button class="sound-btn" id="soundToggleBtn" onclick="toggleSoundPanel()" title="Sound Settings">
+            <i class="fas fa-volume-high"></i>
+        </button>
+    </div>
+
+    <!-- Page transition overlay -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- Navigation -->
+    <nav id="mainNav">
+        <div class="nav-left">
+            <a href="#" onclick="showHome()" class="active nav-logo">■ GLOSARYO</a>
+        </div>
+        <div class="nav-right">
+            <a href="#" onclick="showGlosaryo()">Glosaryo</a>
+            <a href="#" onclick="scrollToKasaysayan()">Kasaysayan</a>
+            <a href="#" onclick="showFlashcard()" id="navFlashcard">Flashcard</a>
+            <a href="#" onclick="showQuiz()" id="navQuiz">Pagsusulit</a>
+            <button class="dark-mode-btn" id="darkModeBtn" onclick="toggleDarkMode()" title="I-toggle ang Dark Mode"><i
+                    class="fas fa-sun"></i>
+                Liwanag</button>
+        </div>
+        <button class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#" onclick="showHomeMobile()" class="active">Home</a>
+        <a href="#" onclick="showGlosaryoMobile()">Glosaryo</a>
+        <a href="#" onclick="scrollToKasaysayanMobile()">Kasaysayan</a>
+        <a href="#" onclick="showFlashcard(); closeMobileMenu();">Flashcard</a>
+        <a href="#" onclick="showQuiz(); closeMobileMenu();">Pagsusulit</a>
+        <button class="dark-mode-btn" style="margin-top:20px;width:100%;"
+            onclick="toggleDarkMode(); closeMobileMenu();"><i class="fas fa-circle-half-stroke"></i> Dark/Light
+            Mode</button>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Pixel particles container -->
+    <div class="pixel-particles" id="pixelParticles"></div>
+
+    <!-- ===== HOME SECTION ===== -->
+    <section id="home">
+        <!-- Hero -->
+        <div class="hero">
+            <div class="hero-eyebrow">Kartunan · Valenzuela · Pilipinas</div>
+            <h1>GLOSARYO</h1>
+            <div class="hero-badge">
+                <div class="dot"></div>
+                Pang-edukasyong Talasalitaan
+            </div>
+            <p>Isang makulay na kalipunan ng mga salitang humuhubog sa mundo ng kartunan. Mga terminong may sariling
+                buhay at kuwento sa bawat sulok ng industriya.</p>
+            <div class="hero-cta">
+                <button class="btn-primary" onclick="showGlosaryo()">TUKLASIN ANG MGA SALITA</button>
+                <button class="btn-secondary" onclick="scrollToKasaysayan()">KASAYSAYAN</button>
+                <!--  <button class="btn-secondary" onclick="showFlashcard()">▶ FLASHCARD</button>
+                <button class="btn-secondary" onclick="showQuiz()">✎ QUIZ</button>-->
+            </div>
+            <div class="scroll-down" onclick="scrollToCarousel()">
+                <span class="scroll-down-label">Mag-scroll</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+                    <path d="M7.41 14.59L12 19.17l4.59-4.58L18 16l-6 6-6-6 1.41-1.41z" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Carousel Section -->
+        <div class="carousel-section">
+            <h2 class="section-heading">GLOSARYO</h2>
+            <div class="section-divider">
+                <div class="line"></div>
+                <div class="diamond"></div>
+                <div class="line"></div>
+            </div>
+
+            <!-- Word of the Day -->
+            <div class="wotd-section" id="wotdSection">
+                <div class="wotd-label">WORD OF THE DAY</div>
+                <div class="wotd-term" id="wotdTerm">—</div>
+                <div class="wotd-def" id="wotdDef">—</div>
+                <div class="wotd-category" id="wotdCat">—</div>
+                <div class="wotd-actions">
+                    <button class="wotd-btn" onclick="openWotdDetail()">▶ TINGNAN</button>
+                    <button class="wotd-btn" onclick="initWordOfDay(true)">↻ BAGO</button>
+                </div>
+            </div>
+
+            <!-- Category Stats -->
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-number">9</div>
+                    <div class="stat-label">Kagamitan</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">16</div>
+                    <div class="stat-label">Materyales</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">21</div>
+                    <div class="stat-label">Proseso</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Gampanin</div>
+                </div>
+            </div>
+
+            <div class="carousel-container">
+                <div class="carousel-wrapper" id="carouselWrapper">
+                    <div class="carousel-card card-blue" onclick="showKagamitan()">
+                        <div class="card-blue-bg"></div>
+                        <div class="card-number">01</div>
+                        <div class="card-inner">
+                            <div class="card-content">
+                                <img src="./images/kagamitan.jpg" alt="Kagamitan" class="card-image">
+                            </div>
+                            <h3 class="card-title">Kagamitan</h3>
+                            <p class="card-description">Mga kahulugan ng mga Salita sa Kagamitan</p>
+                        </div>
+                    </div>
+                    <div class="carousel-card card-red" onclick="showMateryales()">
+                        <div class="card-red-bg"></div>
+                        <div class="card-number">02</div>
+                        <div class="card-inner">
+                            <div class="card-content">
+                                <img src="./images/materyales.jpg" alt="Materyales" class="card-image">
+                            </div>
+                            <h3 class="card-title">Materyales</h3>
+                            <p class="card-description">Mga kahulugan ng mga Salita sa Materyales</p>
+                        </div>
+                    </div>
+                    <div class="carousel-card card-yellow" onclick="showProseso()">
+                        <div class="card-yellow-bg"></div>
+                        <div class="card-number">03</div>
+                        <div class="card-inner">
+                            <div class="card-content">
+                                <img src="./images/proseso.jpg" alt="Proseso" class="card-image">
+                            </div>
+                            <h3 class="card-title">Proseso</h3>
+                            <p class="card-description">Mga Kahulugan ng mga Salita sa Proseso</p>
+                        </div>
+                    </div>
+                    <div class="carousel-card card-green" onclick="showGampanin()">
+                        <div class="card-green-bg"></div>
+                        <div class="card-number">04</div>
+                        <div class="card-inner">
+                            <div class="card-content">
+                                <img src="./images/mananabas.jpg" alt="Gampanin" class="card-image">
+                            </div>
+                            <h3 class="card-title">Gampanin</h3>
+                            <p class="card-description">Mga salitang ginagamit sa Pagtukoy ng iba't ibang gampanin ng
+                                mga Mananabas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-btn" onclick="moveCarousel(-1)">‹</button>
+                <div class="carousel-dots" id="carouselDots">
+                    <div class="carousel-dot active" onclick="goToSlide(0)"></div>
+                    <div class="carousel-dot" onclick="goToSlide(1)"></div>
+                    <div class="carousel-dot" onclick="goToSlide(2)"></div>
+                    <div class="carousel-dot" onclick="goToSlide(3)"></div>
+                </div>
+                <button class="carousel-btn" onclick="moveCarousel(1)">›</button>
+            </div>
+        </div>
+
+        <!-- Kasaysayan Section -->
+        <div class="kasaysayan-section" id="kasaysayan">
+            <div class="kasaysayan-header">
+                <h2 class="kasaysayan-title">KASAYSAYAN</h2>
+            </div>
+            <div class="kasaysayan-content">
+                Ang kartunan ay nabuo noong taong <strong style="color:var(--gold)">1975</strong> sa pangunguna ng
+                mag-asawang <strong style="color:var(--gold)">Boyet Licaros at Elsa Licaros</strong> na itinatag sa
+                ilalim ng kumpanyang pinangalanang <em>Boyet Box Maker</em>. Matatagpuan ito sa Veinte Reales,
+                Valenzuela sa bahaging hangganan nito sa Bancal Extension, Lungsod ng Meycauayan.
+
+                <br><br>
+                Binubuo ang buong lawak na sakop ng kanilang lupa ang kartunan, lote, bodega, kabahayan, at maliit na
+                farm. Mula sa malawak na kalupaan, nakalaan ang limang imprastraktura bilang pagawaan at bodega ng mga
+                mananabas ng karton. Noong araw ay nasa mahigit sa tatlumpung mga manggagawa ang tinatayang nagtatrabaho
+                sa loob ng Kartunan.
+
+                <br><br>
+                Ang kumpanyang ito ay nagkaroon ng mga tumatangkilik buhat ng malawakang pagmanupaktura nito ng mga
+                kahon na nagagamit sa ilang produkto katulad na lamang ng CHK foods, Cassava, pako, at marami pang iba.
+
+                <br><br>
+                Gayunpaman, idineklara noong ika-<strong style="color:var(--gold)">16 ng Marso, 2020</strong> ang
+                malawakang enhanced community quarantine sa buong Luzon. Nagdulot ito ng paghina ng kartunan — hanggang
+                sa maging anim hanggang sampu na lamang ang aktibong gumagawa sa loob nito. Kasalukuyan ding dalawang
+                imprastraktura na lamang ang nagagamit: (1) pagawaan; at (2) bodega.
+
+                <div class="kasaysayan-subtitle">Wikang Sinasalita</div>
+                <div class="language-list">
+                    <div class="language-tag">Bicolano</div>
+                    <div class="language-tag">Bisaya</div>
+                    <div class="language-tag">Pangasinense</div>
+                    <div class="language-tag">Tagalog</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== KAGAMITAN SECTION ===== -->
+    <section class="kagamitan-section" id="kagamitan">
+        <div class="kagamitan-header">
+            <h2 class="kagamitan-title">KAGAMITAN</h2>
+            <button class="back-button" onclick="showHome()">◄ Bumalik</button>
+        </div>
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="searchKagamitan" placeholder="Maghanap ng salita..."
+                    oninput="filterButtons('kagamitan-grid', this.value)">
+            </div>
+            <div class="search-count" id="countKagamitan">9 salita</div>
+        </div>
+        <div class="kagamitan-grid" id="kagamitan-grid">
+            <button class="kagamitan-button" onclick="showDetail('Iskóring o pagulungán', 'kagamitan')"><span>Iskóring o
+                    pagulungán</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Islátán', 'kagamitan')"><span>Islátán</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Katér', 'kagamitan')"><span>Katér</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Malakíng mukhâ', 'kagamitan')"><span>Malakíng
+                    mukhâ</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Maliít na mukhâ', 'kagamitan')"><span>Maliít na
+                    mukhâ</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Mukhâ', 'kagamitan')"><span>Mukhâ</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Panghágod', 'kagamitan')"><span>Panghágod</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pang-imprénta', 'kagamitan')"><span>Pang-imprénta</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Pintúra', 'kagamitan')"><span>Pintúra</span></button>
+        </div>
+        <div class="no-results" id="noResultsKagamitan">Walang nahanap na salita.</div>
+    </section>
+
+    <!-- ===== MATERYALES SECTION ===== -->
+    <section class="materyales-section" id="materyales">
+        <div class="materyales-header">
+            <h2 class="materyales-title">MATERYALES</h2>
+            <button class="back-button" onclick="showHome()">◄ Bumalik</button>
+        </div>
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="searchMateryales" placeholder="Maghanap ng salita..."
+                    oninput="filterButtons('materyales-grid', this.value)">
+            </div>
+            <div class="search-count" id="countMateryales">16 salita</div>
+        </div>
+        <div class="materyales-grid" id="materyales-grid">
+            <button class="kagamitan-button" onclick="showDetail('Brand néw', 'materyales')"><span>Brand
+                    néw</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Del mónte', 'materyales')"><span>Del
+                    mónte</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Dilà', 'materyales')"><span>Dilà</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Dóbol', 'materyales')"><span>Dóbol</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Gawgáw', 'materyales')"><span>Gawgáw</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Kartón', 'materyales')"><span>Kartón</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Kóla', 'materyales')"><span>Kóla</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Panapì', 'materyales')"><span>Panapì</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pandugtóng', 'materyales')"><span>Pandugtóng</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pantápal', 'materyales')"><span>Pantápal</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Partisyón', 'materyales')"><span>Partisyón</span></button>
+            <button class="kagamitan-button" onclick="showDetail('lokál', 'materyales')"><span>
+                    lokál</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Skráp', 'materyales')"><span>Skráp</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Síngle', 'materyales')"><span>Síngle</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Sosà', 'materyales')"><span>Sosà</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Tsinélas', 'materyales')"><span>Tsinélas</span></button>
+        </div>
+        <div class="no-results" id="noResultsMateryales">Walang nahanap na salita.</div>
+    </section>
+
+    <!-- ===== PROSESO SECTION ===== -->
+    <section class="proseso-section" id="proseso">
+        <div class="proseso-header">
+            <h2 class="proseso-title">PROSESO</h2>
+            <button class="back-button" onclick="showHome()">◄ Bumalik</button>
+        </div>
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="searchProseso" placeholder="Maghanap ng salita..."
+                    oninput="filterButtons('proseso-grid', this.value)">
+            </div>
+            <div class="search-count" id="countProseso">21 salita</div>
+        </div>
+        <div class="proseso-grid" id="proseso-grid">
+            <button class="kagamitan-button" onclick="showDetail('Delivér', 'proseso')"><span>Delivér</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Dudugtúngan', 'proseso')"><span>Dudugtúngan</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Ekspórt', 'proseso')"><span>Ekspórt</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Hahagúrin', 'proseso')"><span>Hahagúrin</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Impórt', 'proseso')"><span>Impórt</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pagbabaliktád', 'proseso')"><span>Pagbabaliktád</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pag-iimprénta', 'proseso')"><span>Pag-iimprénta</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pag-i-islát', 'proseso')"><span>Pag-i-islát</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pagkakamáda', 'proseso')"><span>Pagkakamáda</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pagpapagúlong', 'proseso')"><span>Pagpapagúlong</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pagpapakwentá', 'proseso')"><span>Pagpapakwentá</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pagpapaldó', 'proseso')"><span>Pagpapaldó</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pagtatábas', 'proseso')"><span>Pagtatábas</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Pagtatápal', 'proseso')"><span>Pagtatápal</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Pakyáwan', 'proseso')"><span>Pakyáwan</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Pick up', 'proseso')"><span>Pick up</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Rejêct', 'proseso')"><span>Rejêct</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Repaír', 'proseso')"><span>Repaír</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Rush', 'proseso')"><span>Rush</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Sinasapían', 'proseso')"><span>Sinasapían</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Yayariín', 'proseso')"><span>Yayariín</span></button>
+        </div>
+        <div class="no-results" id="noResultsProseso">Walang nahanap na salita.</div>
+    </section>
+
+    <!-- ===== GAMPANIN SECTION ===== -->
+    <section class="gampanin-section" id="gampanin">
+        <div class="gampanin-header">
+            <h2 class="gampanin-title">GAMPANIN</h2>
+            <button class="back-button" onclick="showHome()">◄ Bumalik</button>
+        </div>
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="searchGampanin" placeholder="Maghanap ng salita..."
+                    oninput="filterButtons('gampanin-grid', this.value)">
+            </div>
+            <div class="search-count" id="countGampanin">5 salita</div>
+        </div>
+        <div class="gampanin-grid" id="gampanin-grid">
+            <button class="kagamitan-button" onclick="showDetail('Katiwalà', 'gampanin')"><span>Katiwalà</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Mananábas', 'gampanin')"><span>Mananábas</span></button>
+            <button class="kagamitan-button" onclick="showDetail('Taás', 'gampanin')"><span>Taás</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Taga-imprénta', 'gampanin')"><span>Taga-imprénta</span></button>
+            <button class="kagamitan-button"
+                onclick="showDetail('Tagapaldó', 'gampanin')"><span>Tagapaldó</span></button>
+        </div>
+        <div class="no-results" id="noResultsGampanin">Walang nahanap na salita.</div>
+    </section>
+
+    <!-- ===== DETAIL SECTION ===== -->
+    <section class="detail-section" id="detail">
+        <div class="detail-header">
+            <h2 class="detail-title" id="detailTitle">DETAIL</h2>
+            <button class="back-button" onclick="goBackToPreviousSection()">◄ Bumalik</button>
+        </div>
+        <div class="detail-card">
+            <div class="detail-card-bg"></div>
+            <div class="detail-card-inner">
+                <h3 class="detail-term" id="detailTerm">Islátán</h3>
+                <div class="video-box">
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                        </svg>
+                        <span>WALANG MEDIA</span>
+                    </div>
+                    <video id="detailVideo" class="detail-video" controls muted style="display:none;">
+                        Your browser does not support the video tag.
+                    </video>
+                    <img id="detailImage" class="detail-image" style="display:none;" alt="Term Image">
+                </div>
+
+                <div class="detail-content">
+                    <div class="audio-hint-banner"><i class="fas fa-volume-high"></i> Pindutin ang
+                        <strong>PAKINGGAN</strong> para marinig ang bawat bahagi
+                    </div>
+                    <div class="detail-section-with-audio">
+                        <h4 class="detail-section-title">
+                            Kahulugan
+                            <div class="audio-icon" id="definitionAudioIcon" onclick="toggleAudio('definition')"
+                                title="Pakinggan ang kahulugan">
+                                PAKINGGAN
+                            </div>
+                        </h4>
+                        <p class="detail-text" id="detailDefinition">Isang bahagi ng kater na nagsisilbing gabay sa
+                            paghahati para malagyan ng islat ang karton.</p>
+                    </div>
+
+                    <div class="detail-section-with-audio">
+                        <h4 class="detail-section-title">
+                            Gamit sa Pangungusap
+                            <div class="audio-icon" id="usageAudioIcon" onclick="toggleAudio('usage')"
+                                title="Pakinggan ang gamit sa pangungusap">
+                                PAKINGGAN
+                            </div>
+                        </h4>
+                        <p class="detail-text" id="detailUsage">Ipinadaan ni Miguel ang karton sa iskóring upang
+                            magkaroon ito ng pantay na tupi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FLASHCARD SECTION ===== -->
+    <section class="flashcard-section" id="flashcard">
+        <div class="flashcard-header">
+            <h2 class="flashcard-title">▶ FLASHCARD</h2>
+            <button class="back-button" onclick="showHome()">◄ Bumalik</button>
+        </div>
+        <div class="flashcard-filter">
+            <button class="fc-filter-btn active" onclick="setFcFilter('lahat', this)">LAHAT</button>
+            <button class="fc-filter-btn" onclick="setFcFilter('kagamitan', this)">KAGAMITAN</button>
+            <button class="fc-filter-btn" onclick="setFcFilter('materyales', this)">MATERYALES</button>
+            <button class="fc-filter-btn" onclick="setFcFilter('proseso', this)">PROSESO</button>
+            <button class="fc-filter-btn" onclick="setFcFilter('gampanin', this)">GAMPANIN</button>
+        </div>
+        <div class="flashcard-arena">
+            <div class="flashcard-progress-info">
+                <span id="fcProgressText">0 / 0</span>
+            </div>
+            <div class="quiz-progress-bar-outer" style="margin-bottom:10px">
+                <div class="quiz-progress-bar-fill" id="fcProgressBar" style="width:0%"></div>
+            </div>
+            <div class="flashcard-scene" id="flashcardScene" onclick="flipFlashcard()">
+                <div class="flashcard-inner" id="flashcardInner">
+                    <div class="flashcard-face flashcard-front">
+                        <div class="fc-hint">I-click para ipakita ang kahulugan</div>
+                        <div class="fc-term" id="fcTerm">—</div>
+                        <div class="fc-category-tag" id="fcCat">—</div>
+                    </div>
+                    <div class="flashcard-face flashcard-back">
+                        <div class="fc-back-hint">Kahulugan</div>
+                        <div class="fc-definition" id="fcDef">—</div>
+                        <div class="fc-usage" id="fcUsage">—</div>
+                    </div>
+                </div>
+            </div>
+            <div class="fc-done-screen" id="fcDoneScreen">
+                <div class="fc-done-text"><i class="fas fa-trophy"></i> NATAPOS MO NA!</div>
+                <div class="fc-done-sub" id="fcDoneSub">Napag-aralan mo na ang lahat ng flashcard.</div>
+                <button class="fc-btn fc-btn-flip" onclick="restartFlashcard()">↻ ULIT</button>
+            </div>
+            <div class="flashcard-controls" id="fcControls">
+                <button class="fc-btn fc-btn-prev" onclick="fcNavigate(-1)">◄ NAKARAAN</button>
+                <button class="fc-btn fc-btn-flip" onclick="flipFlashcard()">↕ IBALIK</button>
+                <button class="fc-btn fc-btn-next" onclick="fcNavigate(1)">SUSUNOD ►</button>
+            </div>
+            <div class="flashcard-controls" style="margin-top:8px">
+                <button class="fc-shuffle-btn" onclick="shuffleFlashcards()">⇌ I-SHUFFLE</button>
+                <div class="fc-count" id="fcCountDisplay" style="padding:8px 14px"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== QUIZ SECTION ===== -->
+    <section class="quiz-section" id="quiz">
+        <div class="quiz-header">
+            <h2 class="quiz-title"><i class="fas fa-pen-to-square"></i> Pagsusulit</h2>
+            <div class="quiz-score-display">★ <span id="quizScoreDisplay">0</span> puntos</div>
+            <button class="back-button" onclick="showHome()">◄ Bumalik</button>
+        </div>
+        <div class="quiz-arena" id="quizArena">
+            <!-- Quiz setup -->
+            <div id="quizSetup" style="text-align:center">
+                <div
+                    style="font-family:'Jersey 25',cursive;font-size:22px;color:var(--gold);margin-bottom:20px;letter-spacing:2px;">
+                    PUMILI NG KATEGORYA</div>
+                <div class="flashcard-filter" style="justify-content:center;margin-bottom:30px">
+                    <button class="fc-filter-btn active" onclick="setQuizFilter('lahat',this)">LAHAT</button>
+                    <button class="fc-filter-btn" onclick="setQuizFilter('kagamitan',this)">KAGAMITAN</button>
+                    <button class="fc-filter-btn" onclick="setQuizFilter('materyales',this)">MATERYALES</button>
+                    <button class="fc-filter-btn" onclick="setQuizFilter('proseso',this)">PROSESO</button>
+                    <button class="fc-filter-btn" onclick="setQuizFilter('gampanin',this)">GAMPANIN</button>
+                </div>
+                <div
+                    style="font-family:'Jersey 25',cursive;font-size:22px;color:var(--gold);margin-bottom:16px;letter-spacing:2px;">
+                    BILANG NG TANONG</div>
+                <div class="flashcard-filter" style="justify-content:center;margin-bottom:36px" id="quizCountBtns">
+                    <button class="fc-filter-btn active" onclick="setQuizCount(10,this)">10</button>
+                    <button class="fc-filter-btn" onclick="setQuizCount(20,this)">20</button>
+                    <button class="fc-filter-btn" onclick="setQuizCount(999,this)">LAHAT</button>
+                </div>
+                <button class="btn-primary" onclick="startQuiz()" style="margin:0 auto;display:block">SIMULAN ANG
+                    PAGSUSULIT
+                    ►</button>
+            </div>
+            <!-- Quiz game -->
+            <div id="quizGame" style="display:none">
+                <div class="quiz-progress-bar-outer">
+                    <div class="quiz-progress-bar-fill" id="quizProgressBar" style="width:0%"></div>
+                </div>
+                <div class="quiz-question-box">
+                    <div class="quiz-q-label">ANO ANG KAHULUGAN? <span class="quiz-q-num" id="quizQNum">1/10</span>
+                    </div>
+                    <div class="quiz-question-text" id="quizQuestion">—</div>
+                </div>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-feedback" id="quizFeedback"></div>
+                <button class="quiz-next-btn" id="quizNextBtn" onclick="nextQuizQuestion()">SUSUNOD ►</button>
+            </div>
+            <!-- Quiz result -->
+            <div class="quiz-result-screen" id="quizResult">
+                <div class="quiz-result-title" id="quizResultTitle">TAPOS NA!</div>
+                <div class="quiz-result-score" id="quizResultScore">0/10</div>
+                <div class="quiz-result-grade" id="quizResultGrade">—</div>
+                <div class="quiz-result-btns">
+                    <button class="btn-primary" onclick="startQuiz()">↻ ULIT</button>
+                    <button class="btn-secondary"
+                        onclick="document.getElementById('quizGame').style.display='none';document.getElementById('quizResult').style.display='none';document.getElementById('quizSetup').style.display='block';">PALITAN</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // ===== STATE =====
+        let currentIndex = 0;
+        let currentSection = 'home';
+        let previousSection = 'home';
+        let currentAudio = null;
+        let currentDetailTerm = '';
+
+        // ===== PIXEL PARTICLES =====
+        (function createParticles() {
+            const container = document.getElementById('pixelParticles');
+            const colors = ['#FFD700', '#FF6B6B', '#42A5F5', '#03B9A6', '#FFC107'];
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.className = 'pixel-particle';
+                p.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    width: ${Math.random() > 0.5 ? 8 : 12}px;
+                    height: ${Math.random() > 0.5 ? 8 : 12}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    animation-duration: ${6 + Math.random() * 10}s;
+                    animation-delay: ${Math.random() * 8}s;
+                    opacity: ${0.3 + Math.random() * 0.4};
+                `;
+                container.appendChild(p);
+            }
+        })();
+
+        // ===== DATA MAPS =====
+        const videoMap = {
+            'Delivér': './videos/deliver.mp4',
+            'Dudugtúngan': './videos/Dudugtungan.MOV',
+            'Ekspórt': './videos/Eksport.mp4',
+            'Hahagúrin': './videos/Hahagurin.MOV',
+            'Impórt': './videos/import.mp4',
+            'Pagbabaliktád': './videos/pagbabaliktad.mp4',
+            'Pag-iimprénta': './videos/Pag-iimprenta.mp4',
+            'Pag-i-islát': './videos/pag-iislat.mp4',
+            'Pagkakamáda': './videos/pagkakamada.mp4',
+            'Pagpapagúlong': './videos/pagpapagulong.mp4',
+            'Pagpapakwentá': './videos/pagpapakwenta.mp4',
+            'Pagpapaldó': './videos/Pagpapaldo.mp4',
+            'Pagtatábas': './videos/Tabas.MOV',
+            'Pagtatápal': './videos/Pagtatapal.MOV',
+            'Pakyáwan': './videos/PAKYAWAN.mp4',
+            'Pick up': './videos/PICKUP.mp4',
+            'Rejêct': './videos/Reject.mp4',
+            'Repaír': './videos/repair.mp4',
+            'Rush': './videos/RUSH.mp4',
+            'Sinasapían': './videos/sinasapian.mp4',
+            'Yayariín': './videos/yayariin.mp4',
+        };
+
+        const imageMap = {
+            'Islátán': './images/islatan.jpg',
+            'Iskóring o pagulungán': './images/Pagulungan.jpg',
+            'Katér': './images/Kater.jpg',
+            'Malakíng mukhâ': './images/Malaking mukha.jpg',
+            'Maliít na mukhâ': './images/Maliit na mukha.jpg',
+            'Mukhâ': './images/Mukha o face.jpg',
+            'Panghágod': './images/Panghagod.jpg',
+            'Pang-imprénta': './images/Pang-imprenta.jpg',
+            'Pintúra': './images/pintura.jpg',
+            'Brand néw': './images/Brand new.jpg',
+            'Del mónte': './images/Del monte.jpg',
+            'Dilà': './images/dila.jpg',
+            'Dóbol': './images/dobol.jpg',
+            'Gawgáw': './images/Gawgaw.jpg',
+            'Kartón': './images/karton.jpg',
+            'Kóla': './images/Kola.jpg',
+            'Panapì': './images/Panapi.jpg',
+            'Pandugtóng': './images/Pandugtong.jpg',
+            'Pantápal': './images/Pantapal.jpg',
+            'Partisyón': './images/Partisyon.jpg',
+            'lokál': './images/Segunda mano o lokal.jpg',
+            'Skráp': './images/Scrap.jpg',
+            'Síngle': './images/single.jpg',
+            'Sosà': './images/Sosas.jpg',
+            'Tsinélas': './images/tsinelas.jpg',
+            'Mananábas': './images/mananabas.jpg',
+            'Katiwalà': './images/katiwala.jpg',
+            'Taás': './images/Taas o amo.jpg',
+            'Taga-imprénta': './images/tagaimprenta.jpg',
+            'Tagapaldó': './images/tagapaldo.jpg'
+        };
+
+        const definitionAudioMap = {
+            'Islátán': './audio/kagamitan-k/islatan.m4a',
+            'Iskóring o pagulungán': './audio/kagamitan-k/iskoring Kahulugan.m4a',
+            'Katér': './audio/kagamitan-k/kater.m4a',
+            'Malakíng mukhâ': './audio/kagamitan-k/malking mukha kahulugan.m4a',
+            'Maliít na mukhâ': './audio/kagamitan-k/maliit na mukha kahulugan.m4a',
+            'Mukhâ': './audio/kagamitan-k/mukha kahulugan.m4a',
+            'Panghágod': './audio/kagamitan-k/panghagod kahulugan.m4a',
+            'Pang-imprénta': './audio/kagamitan-k/pang imprenta kahukugan.m4a',
+            'Pintúra': './audio/kagamitan-k/pintura kahulugan.m4a',
+            'Brand néw': './audio/materyales-k/1. brand new kahulugan matwryales.m4a',
+            'Del mónte': './audio/materyales-k/2. del monte kahulugan materyales.m4a',
+            'Dilà': './audio/materyales-k/dila_definition.m4a',
+            'Dóbol': './audio/materyales-k/3 double materyales kahulugan.m4a',
+            'Gawgáw': './audio/materyales-k/4. gawgaw materyales kahukugan.m4a',
+            'Kartón': './audio/materyales-k/5. karton materyales kahulugan.m4a',
+            'Kóla': './audio/materyales-k/6. kola mayeryales kahilugan.m4a',
+            'Panapì': './audio/materyales-k/7 panapi kahulugan materyales.m4a',
+            'Pandugtóng': './audio/materyales-k/8. pandugtong kagukugan materyales.m4a',
+            'Pantápal': './audio/materyales-k/9 pantapal kahulugan materyales.m4a',
+            'Partisyón': './audio/materyales-k/10 partisyon materyales kahulugan.m4a',
+            'lokál': './audio/materyales-k/11 segunda mano o lokal kahukugan materyales.m4a',
+            'Skráp': './audio/materyales-k/12 scrap kahukugan materyales.m4a',
+            'Síngle': './audio/materyales-k/13 single kahulugan mareryales.m4a',
+            'Sosà': './audio/materyales-k/14 sosa kahukugan materyales.m4a',
+            'Tsinélas': './audio/materyales-k/15 tsinelas kahikuhan matwryales.m4a',
+            'Delivér': './audio/proseso-k/1 deliver proseso.m4a',
+            'Dudugtúngan': './audio/proseso-k/2 duduftungan proswso.m4a',
+            'Ekspórt': './audio/proseso-k/3 export kahiluhan proseso.m4a',
+            'Hahagúrin': './audio/proseso-k/4 hahagurin proseso.m4a',
+            'Impórt': './audio/proseso-k/5 import kahulugan proseso.m4a',
+            'Pagbabaliktád': './audio/proseso-k/6 pagbabalikyad proseso.m4a',
+            'Pag-iimprénta': './audio/proseso-k/7 pah iimprenta proseso.m4a',
+            'Pag-i-islát': './audio/proseso-k/8 pahiislay proseso.m4a',
+            'Pagkakamáda': './audio/proseso-k/9 pagkakamada proseso.m4a',
+            'Pagpapagúlong': './audio/proseso-k/10 pagpapagulong oroseso.m4a',
+            'Pagpapakwentá': './audio/proseso-k/11 pagpapkwenta proseso.m4a',
+            'Pagpapaldó': './audio/proseso-k/12 pagpapaldo proseso.m4a',
+            'Pagtatábas': './audio/proseso-k/13 pagtatabqs proseso.m4a',
+            'Pagtatápal': './audio/proseso-k/14 pagtatapal proseso.m4a',
+            'Pakyáwan': './audio/proseso-k/15 palyawan proseso.m4a',
+            'Pick up': './audio/proseso-k/16 pickup proseso.m4a',
+            'Rejêct': './audio/proseso-k/17 reject proseso.m4a',
+            'Repaír': './audio/proseso-k/18 repair proseso.m4a',
+            'Rush': './audio/proseso-k/19 rush proseso.m4a',
+            'Sinasapían': './audio/proseso-k/20 sinasapian proseso.m4a',
+            'Yayariín': './audio/proseso-k/21 yayariin proseso.m4a',
+            'Katiwalà': './audio/gampanin-k/1 katiwala gmapmanin.m4a',
+            'Mananábas': './audio/gampanin-k/2 mananabas gamapanin.m4a',
+            'Taás': './audio/gampanin-k/3 taas o amo gampanin.m4a',
+            'Taga-imprénta': './audio/gampanin-k/4 taga imprenta gampanin.m4a',
+            'Tagapaldó': './audio/gampanin-k/5 tagapaldo gampanin.m4a'
+        };
+
+        const usageAudioMap = {
+            'Islátán': './audio/kagamitan-p/2. Islatan.m4a',
+            'Iskóring o pagulungán': './audio/kagamitan-p/1. Kagamitan (skoring).m4a',
+            'Katér': './audio/kagamitan-p/3. kater.m4a',
+            'Malakíng mukhâ': './audio/kagamitan-p/4. Malaking mukha.m4a',
+            'Maliít na mukhâ': './audio/kagamitan-p/5. Maliit na mukha.m4a',
+            'Mukhâ': './audio/kagamitan-p/6. Mukha.m4a',
+            'Panghágod': './audio/kagamitan-p/7. Panghagod.m4a',
+            'Pang-imprénta': './audio/kagamitan-p/8. Pang-imprenta.m4a',
+            'Pintúra': './audio/kagamitan-p/9. pintura.m4a',
+            'Brand néw': './audio/materyales-p/1. Brand new.m4a',
+            'Del mónte': './audio/materyales-p/2. Del monte.m4a',
+            'Dilà': './audio/materyales-p/1. Dila.m4a',
+            'Dóbol': './audio/materyales-p/3. Double.m4a',
+            'Gawgáw': './audio/materyales-p/4. Gawgaw.m4a',
+            'Kartón': './audio/materyales-p/5. karton.m4a',
+            'Kóla': './audio/materyales-p/6. kola.m4a',
+            'Panapì': './audio/materyales-p/7. Panapi.m4a',
+            'Pandugtóng': './audio/materyales-p/8. Pandugtong.m4a',
+            'Pantápal': './audio/materyales-p/9. Pantapal.m4a',
+            'Partisyón': './audio/materyales-p/10. Partisyon.m4a',
+            'lokál': './audio/materyales-p/11. Segunda mano.m4a',
+            'Skráp': './audio/materyales-p/12. Scrap.m4a',
+            'Síngle': './audio/materyales-p/13. single.m4a',
+            'Sosà': './audio/materyales-p/14. sosa.m4a',
+            'Tsinélas': './audio/materyales-p/15. Tsinelas.m4a',
+            'Delivér': './audio/proseso-p/1. Deliver.m4a',
+            'Dudugtúngan': './audio/proseso-p/2. Dudugtungan.m4a',
+            'Ekspórt': './audio/proseso-p/3. Export.m4a',
+            'Hahagúrin': './audio/proseso-p/4. hahagurin.m4a',
+            'Impórt': './audio/proseso-p/5. import.m4a',
+            'Pagbabaliktád': './audio/proseso-p/6. Pagbabaliktad.m4a',
+            'Pag-iimprénta': './audio/proseso-p/7. Pag-iimprenta.m4a',
+            'Pag-i-islát': './audio/proseso-p/8. Pag-iislat.m4a',
+            'Pagkakamáda': './audio/proseso-p/9. pagkakamada.m4a',
+            'Pagpapagúlong': './audio/proseso-p/10. Pagpapagulong.m4a',
+            'Pagpapakwentá': './audio/proseso-p/11. pagpapakwenta.m4a',
+            'Pagpapaldó': './audio/proseso-p/12. Pagpapaldo.m4a',
+            'Pagtatábas': './audio/proseso-p/13. pagtatabas.m4a',
+            'Pagtatápal': './audio/proseso-p/14. Pagtatapal.m4a',
+            'Pakyáwan': './audio/proseso-p/15. Pakyawan.m4a',
+            'Pick up': './audio/proseso-p/16. Pick up.m4a',
+            'Rejêct': './audio/proseso-p/17. Reject.m4a',
+            'Repaír': './audio/proseso-p/18. Repair.m4a',
+            'Rush': './audio/proseso-p/19. rush.m4a',
+            'Sinasapían': './audio/proseso-p/20. Sinasapian.m4a',
+            'Yayariín': './audio/proseso-p/21. yayariin.m4a',
+            'Katiwalà': './audio/gampanin-p/1. Katiwala.m4a',
+            'Mananábas': './audio/gampanin-p/2. Mananabas.m4a',
+            'Taás': './audio/gampanin-p/3. Taas.m4a',
+            'Taga-imprénta': './audio/gampanin-p/4. Tagaimprenta.m4a',
+            'Tagapaldó': './audio/gampanin-p/5. tagapaldo.m4a'
+        };
+
+        const contentMap = {
+            'Islátán': { definition: 'Isang bahagi ng katér na nagsisilbing gabay sa paghahati para malagyan ng islát ang karton.', usage: 'Itinapat ni Iñigo ang karton sa islátán upang makuha ang tamang islát.' },
+            'Iskóring o pagulungán': { definition: 'Isang makinarya na nagbibigay ng tupi sa magkabilang bahagi ng karton.', usage: 'Ipinadaan ni Miguel ang karton sa iskóring upang magkaroon ito ng pantay na tupi.' },
+            'Katér': { definition: 'Ginagamit sa paggugupit at paghahati ng mga karton.', usage: 'Gumamit sila ng katér upang maayos na maputol ang karton.' },
+            'Malakíng mukhâ': { definition: 'Ang kaliwang bahagi ng karton ng Del mónte na may sukat na 12 pulgada.', usage: 'Maingat na sinusukat ni Damian ang malakíng mukhâ ng karton ng Del mónte upang matiyak na magiging matibay ang kahong binubuo nila.' },
+            'Maliít na mukhâ': { definition: 'Ang kanan na bahagi ng karton ng Del mónte na may sukat na 9 pulgada.', usage: 'Hindi na ipinatabas ni Solom ang maliít na mukhâ ng karton dahil tama na ang sukat nito.' },
+            'Mukhâ': { definition: 'Tumutukoy sa dalawang bahagi ng kabuoang lapad ng karton.', usage: 'Titingnan muna ninyo kung tama ba ang sukat ng dalawang mukhâ ng karton bago tabasin.' },
+            'Panghágod': { definition: 'Isang kahoy na kagamitan na may makinis na texture tulad ng hawakan ng kutsilyo na ginagamit sa pag-aayos ng tupi ng karton.', usage: 'Ginamitan ni Anton ng panghágod ang karton upang mapakinis ang tupi nito.' },
+            'Pang-imprénta': { definition: 'Isang kagamitan na ginagamitan ng pintúra at hinahagod gamit ang tsinélas.', usage: 'Matagal na hinahanap ni Josie ang pang-imprénta dahil nawawala ito ng ilang linggo na.' },
+            'Pintúra': { definition: 'Isang likidong hinahaluan ng harina na ginagamit sa pag-iimprénta ng karton.', usage: 'Naparami ang pintúrang nailagay ni Sarah sa tsinélas, kaya kumalat ito sa karton.' },
+            'Brand néw': { definition: 'Isang malaking karton na walang imprenta na ginagamit batay sa preferensya ng mga kustomer.', usage: 'Para sa mga malalaking kumpanya, mas mabili ang brand néw na mga karton dahil mas maganda ang hitsura nito.' },
+            'Del mónte': { definition: 'Isang karton na may imprenta ng Del mónte na ginagawang kahon ng Gin.', usage: 'Karamihan sa mga ibinabagsak na karton ay may tatak na Del mónte.' },
+            'Dilà': { definition: 'Bahagi ng tinabas na karton na nilalagyan ng pandikit upang ikabit sa likurang bahagi ng isa pang karton sa proseso ng pagbubuo ng kahon.', usage: 'Maingat na ikinabit ni Joshua ang dilàng may pandikit sa likod ng karton.' },
+            'Dóbol': { definition: 'Karton na may dalawang kastro na mas matibay at makapal; kadalasang ginagamit para sa mga kahong paglalagyan ng mabibigat na produkto.', usage: 'Para kay Sofia, mas magandang gamitin ang dóbol na karton para sa mabibigat na gamit na ilalagay rito.' },
+            'Gawgáw': { definition: 'Isang uri ng harina na inihahalo sa sosà para gawing pandikit sa karton.', usage: 'Inihalo nila ang gawgáw sa isang litro ng tubig upang makagawa ng pandikit.' },
+            'Kartón': { definition: 'Pangunahing materyales sa pagbuo ng isang kahon.', usage: 'Kinokolekta muli nila ang mga kartón upang makabuo ng isang kahon.' },
+            'Kóla': { definition: 'Isang malapot na likido mula sa pinaghalong sosàs, harina, at tubig na ginagamit bilang pandikit ng karton.', usage: 'Ipinahid ni Clifford ang kóla sa bahagi ng karton upang maidikit ang isa pang piraso ng karton.' },
+            'Panapì': { definition: 'Kapirasong karton na ikinakabit upang mapahaba pa ang ginagawang karton.', usage: 'Naglagay si Caprice ng panapì dahil nabitin sa haba ang binubuong kahon.' },
+            'Pandugtóng': { definition: 'Kapirasong karton na ikinakabit upang mapalapad pa ang ginagawang karton.', usage: 'Dahil kinulang sa lapad ang binubuong kahon, gumamit si Lella ng pandugtóng upang mapalapad ang karton.' },
+            'Pantápal': { definition: 'Isang kapirasong karton na inilalagay bilang karagdagang patakip ng may sirang bahagi o hindi pantay.', usage: 'Agad na naghanap si Aling Marites ng pantápal nang makita ang maliit na sira ng karton.' },
+            'Partisyón': { definition: 'Isang produktong karton na inilalagay sa loob ng kahon para sa pagkakahati-hati.', usage: 'Nilagyan ni Reich ng partisyón ang kahon upang hindi mabasag ang mga baso.' },
+            'lokál': { definition: 'Isang karton na may imprenta na ginagamit muli upang makabuo ng panibagong sukat.', usage: 'Ginamit muli ni Rave ang lokál na karton para sa bagong sukat.' },
+            'Skráp': { definition: 'Tumutukoy sa mga bahagi ng karton na natabas na at hindi na magagamit. Ginagamit ang mga ito para gawing paldo.', usage: 'Tinipon ni Andrew ang mga skráp para gawing paldo.' },
+            'Síngle': { definition: 'Karton na may isang kastro at mas manipis.', usage: 'Mas magagaan naman na ang mga gamit na gustong ilagay ni Sofia sa síngle na karton dahil mas manipis ito kaysa sa dobleng karton.' },
+            'Sosà': { definition: 'Isang asidong kulay puti na inihahalo sa gawgáw bilang pandikit. Ito rin ay pantunaw o panluto ng gawgáw.', usage: 'Hinaluan ni Heath ng sosà ang gawgáw upang maging mas malagkit at matibay ang pandikit.' },
+            'Tsinélas': { definition: 'Isang parihaba na gawa sa rubber na ipinapanghágod sa imprenta.', usage: 'Kinuha ni Gelo ang tsinélas at ginamit ito bilang panghagod, ngunit wala nang ink.' },
+            'Delivér': { definition: 'Pagdadala ng mga pahinante ng produktong kahon sa mga kustomer.', usage: "Dahil gabi na, bukas na ulit itutuloy ang pagde-delivér ng mga order ng kustomer sa iba't ibang kompanya." },
+            'Dudugtúngan': { definition: 'Pagkakabit ng panibagong karton sa gilid ng ginagawang karton upang mapalapad.', usage: 'Dahil nabitin sa haba ang karton, dudugtúngan ito ni Emma para pumantay ito sa hinahanap na sukat.' },
+            'Ekspórt': { definition: 'Mga produktong hindi tinatapalan at ginagamitan ng brand néw; mismong kustomer ang kumukuha ng karton.', usage: 'Kinakailangan ng mga customer ang mismong karton lamang, kaya nag-eekspórt sila nito upang makabuo ng panibagong anyo mula sa karton.' },
+            'Hahagúrin': { definition: 'Paraan ng pagbibigay ng diin gamit ang panghágod sa mga gilid ng karton upang madaling matupi.', usage: 'Hahagúrin nang madiin ni Samantha ang karton upang madali itong matupi.' },
+            'Impórt': { definition: 'Pagdadala ng kustomer ng mga materyales na karton sa kartunan.', usage: "Kinulang na sa karton ang mga mananábas, kaya naman nag-impórt na sila ng mga brand-new at lokál na karton upang makabuo na ulit ng order ng mga kustomer." },
+            'Pagbabaliktád': { definition: 'Pagbabaliktád ng karton para maitago ang mukhâng may imprenta at nakalabas ang walang imprenta.', usage: 'Patuloy ang pagbabaliktád ni Ate Marie sa mga karton upang maitago ang mukhâng may imprentang bahagi.' },
+            'Pag-iimprénta': { definition: 'Mano-manong paglalagay ng imprenta o logo ng mga kumpanyang bumibili ng kahon.', usage: 'Pag-iimprénta ang tanging ginagawa ni Sally dahil marami na ang nagawang kahon.' },
+            'Pag-i-islát': { definition: 'Paghahati na magsisilbing pagitan ng mga bahaging pansara ng kahon.', usage: 'Patuloy sa pag-i-islát si Jenny dahil maraming karton na naman ang paparating bukas.' },
+            'Pagkakamáda': { definition: 'Paraan ng pagsasalansan ng mga nakataling karton.', usage: 'Isa-isa ang pagkakamáda ni Kit ng mga karton upang mas madali itong mailipat sa isang puwesto.' },
+            'Pagpapagúlong': { definition: 'Pagsasalang ng kartong natabas sa skoring upang matupi nang maayos ang mga gilid.', usage: 'Para magkaroon ng magandang tupi ang karton, pagpapagúlong ang paraan na naisip ni Ariella.' },
+            'Pagpapakwentá': { definition: 'Pagdadala ng kabuoang bilang ng nagawang karton ng mananábas sa may-ari para sila ay masahuran.', usage: 'Pagpapakwentá ng sahod ang unang gagawin ni Pia upang masahuran siya nang tama.' },
+            'Pagpapaldó': { definition: 'Isang nakatipon na scrap na nakataling magkabilang malalaking karton upang mapagsama-sama.', usage: 'Naisip ni Gloria na ang pagpapaldó ay paraan upang makabuo pa ulit ng kahon gamit ang mga ito.' },
+            'Pagtatábas': { definition: 'Paraan ng paggupit ng karton upang mabago ang porma at makabuo ng panibagong kahon.', usage: 'Maingat ang pagtatábas ni Margie ang bahagi ng karton na may sira para maging pulido ang pagbuo ng kahon.' },
+            'Pagtatápal': { definition: 'Pagtatakip ng bahagi ng karton na may sira. Ginagamitan ito ng kapirasong karton bilang pantápal.', usage: 'Sinimulan ni Kokoy ang pagtatápal sa sirang bahagi ng karton gamit ang kapirasong karton upang ibenta ito.' },
+            'Pakyáwan': { definition: 'Uri ng paggawa ng mananábas na nakabatay sa dami ng kanilang kahon na mabubuo.', usage: 'Nagtatrabaho lamang ng anim na oras kada araw si Mary Jean dahil pakyáwan naman ang kanilang gawa.' },
+            'Pick up': { definition: 'Kustomer ang humahakot ng mga produktong kahon.', usage: 'Nakabuo na ng limang daang pirasong kahon sina Karen at Nicole, kaya hinihintay na lamang nila itong ma-pick up ng kustomer.' },
+            'Rejêct': { definition: 'Mga nabuong kahon na may maling sukat at binabalik ng mga kustomer.', usage: 'Hindi nagustuhan ng kustomer ang sukat ng nabuong kahon, kaya isinauli niya ito at minarkahan niya ito bilang rejêct.' },
+            'Repaír': { definition: 'Pagsasaayos muli ng mga rejêct na kahon.', usage: 'Ang mga lokál na karton ay nangangailangan pa ng repaír para magamit ulit ang mga ito at makabuo ng bagong kahon.' },
+            'Rush': { definition: 'Pagbuo ng kahon na kinakailangang mabuo agad dahil may itinakdang oras ang customer.', usage: 'Nagkaroon ng rush sa pagbuo ng kahon dahil bukas na ito kinakailangan ni Catriona para sa kaniyang itinitindang mga baso.' },
+            'Sinasapían': { definition: 'Paraan ng pagkakabit sa kulang na bahagi ng karton upang mapahaba.', usage: 'Sinasapían ni Rachelle ang kulang na bahagi ng karton na bitin upang maipantay ito sa ginagawang sukat.' },
+            'Yayariín': { definition: 'Pagtatábas, pagpapagúlong, at pagbubuo ng karton.', usage: 'Yayariín na ni Manuel ang mga kartong natabas niya.' },
+            'Katiwalà': { definition: 'Taong humahawak ng buong proseso ng paggawa ng kartunan at nagbibigay ng sukat na gagawin ng mga mananábas.', usage: 'Tanungin niyo na lamang po ang katiwalà namin tungkol sa mga sukat ng karton.' },
+            'Mananábas': { definition: 'Mga taong nagtatabas at bumubuo ng kahon.', usage: 'Tuwing umaga, ang mga mananábas ay nagsisimula sa pagtatábas ng karton bago ang iba pang proseso.' },
+            'Taás': { definition: 'Katawagan sa taong nagkukuwenta at nagpapasweldo sa mga mananábas ng karton.', usage: 'Tatapusin ko nang buohin ang sukat ko para makapagkuwenta na ako sa taás.' },
+            'Taga-imprénta': { definition: 'Mga taong naglalagay ng imprenta sa mga nagawang kahon tulad ng pako.', usage: 'Kinuha si Raul bilang tagaimprénta ng karton sa kabilang bayan.' },
+            'Tagapaldó': { definition: 'Mga taong nagtitipon ng mga iskráp para gawing paldo.', usage: 'Tuwing hapon, makikitang nag-iikot ang tagapaldó na si Ando sa Kartunan upang kolektahin ang mga pira-pirasong karton.' }
+        };
+
+        // ===== SEARCH FILTER =====
+        function filterButtons(gridId, query) {
+            const grid = document.getElementById(gridId);
+            const buttons = grid.querySelectorAll('.kagamitan-button');
+            const q = query.toLowerCase().trim();
+            let visibleCount = 0;
+
+            buttons.forEach(btn => {
+                const text = btn.querySelector('span').textContent.toLowerCase();
+                if (!q || text.includes(q)) {
+                    btn.classList.remove('hidden');
+                    btn.style.display = '';
+                    visibleCount++;
+                } else {
+                    btn.classList.add('hidden');
+                    btn.style.display = 'none';
+                }
+            });
+
+            // Update count and no-results
+            const sectionMap = { 'kagamitan-grid': 'Kagamitan', 'materyales-grid': 'Materyales', 'proseso-grid': 'Proseso', 'gampanin-grid': 'Gampanin' };
+            const sectionKey = Object.keys(sectionMap).find(k => k === gridId);
+            const sectionName = sectionMap[sectionKey] || '';
+            const countEl = document.getElementById('count' + sectionName);
+            const noResultsEl = document.getElementById('noResults' + sectionName);
+
+            if (countEl) countEl.textContent = visibleCount + (visibleCount === 1 ? ' salita' : ' salita');
+            if (noResultsEl) noResultsEl.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // ===== MOBILE MENU =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+
+        function toggleMobileMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        function closeMobileMenu() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        hamburger.addEventListener('click', toggleMobileMenu);
+        overlay.addEventListener('click', closeMobileMenu);
+
+        function showHomeMobile() { showHome(); closeMobileMenu(); }
+        function showGlosaryoMobile() { showGlosaryo(); closeMobileMenu(); }
+        function scrollToKasaysayanMobile() { scrollToKasaysayan(); closeMobileMenu(); }
+
+        // ===== NAVIGATION FUNCTIONS =====
+        function hideAllSections() {
+            document.querySelectorAll('section').forEach(s => s.style.display = 'none');
+        }
+
+        function updateNavActive(section) {
+            document.querySelectorAll('nav a, .mobile-menu a').forEach(l => l.classList.remove('active'));
+            const homeSelectors = ['home', 'kagamitan', 'materyales', 'proseso', 'gampanin', 'detail'];
+            if (homeSelectors.includes(section)) {
+                const homeLink = document.querySelector('nav a[onclick="showHome()"]');
+                if (homeLink) homeLink.classList.add('active');
+                const mobileHomeLink = document.querySelector('.mobile-menu a[onclick="showHomeMobile()"]');
+                if (mobileHomeLink) mobileHomeLink.classList.add('active');
+            } else if (section === 'kasaysayan') {
+                const kasLink = document.querySelector('nav a[onclick="scrollToKasaysayan()"]');
+                if (kasLink) kasLink.classList.add('active');
+                const mobileKasLink = document.querySelector('.mobile-menu a[onclick="scrollToKasaysayanMobile()"]');
+                if (mobileKasLink) mobileKasLink.classList.add('active');
+            } else if (section === 'glosaryo') {
+                const glosLink = document.querySelector('nav a[onclick="showGlosaryo()"]');
+                if (glosLink) glosLink.classList.add('active');
+                const mobileGlosLink = document.querySelector('.mobile-menu a[onclick="showGlosaryoMobile()"]');
+                if (mobileGlosLink) mobileGlosLink.classList.add('active');
+            } else if (section === 'flashcard') {
+                const flashLink = document.getElementById('navFlashcard');
+                if (flashLink) flashLink.classList.add('active');
+                const mobileFlashLink = document.querySelector('.mobile-menu a[onclick="showFlashcard(); closeMobileMenu();"]');
+                if (mobileFlashLink) mobileFlashLink.classList.add('active');
+            } else if (section === 'quiz') {
+                const quizLink = document.getElementById('navQuiz');
+                if (quizLink) quizLink.classList.add('active');
+                const mobileQuizLink = document.querySelector('.mobile-menu a[onclick="showQuiz(); closeMobileMenu();"]');
+                if (mobileQuizLink) mobileQuizLink.classList.add('active');
+            }
+        }
+
+        function showHome() {
+            hideAllSections();
+            document.getElementById('home').style.display = 'block';
+            document.body.style.overflow = 'auto';
+            window.scrollTo(0, 0);
+            previousSection = currentSection;
+            currentSection = 'home';
+            updateNavActive('home');
+            closeMobileMenu();
+        }
+
+        function showGlosaryo() {
+            hideAllSections();
+            document.getElementById('home').style.display = 'block';
+            document.body.style.overflow = 'auto';
+            document.querySelector('.carousel-section').scrollIntoView({ behavior: 'smooth' });
+            previousSection = currentSection;
+            currentSection = 'glosaryo';
+            updateNavActive('glosaryo');
+            closeMobileMenu();
+        }
+
+        function showKagamitan() {
+            hideAllSections();
+            document.getElementById('kagamitan').style.display = 'flex';
+            document.body.style.overflow = 'auto';
+            window.scrollTo(0, 0);
+            document.getElementById('searchKagamitan').value = '';
+            filterButtons('kagamitan-grid', '');
+            previousSection = currentSection;
+            currentSection = 'kagamitan';
+            updateNavActive('kagamitan');
+            closeMobileMenu();
+        }
+
+        function showMateryales() {
+            hideAllSections();
+            document.getElementById('materyales').style.display = 'flex';
+            document.body.style.overflow = 'auto';
+            window.scrollTo(0, 0);
+            document.getElementById('searchMateryales').value = '';
+            filterButtons('materyales-grid', '');
+            previousSection = currentSection;
+            currentSection = 'materyales';
+            updateNavActive('materyales');
+            closeMobileMenu();
+        }
+
+        function showProseso() {
+            hideAllSections();
+            document.getElementById('proseso').style.display = 'flex';
+            document.body.style.overflow = 'auto';
+            window.scrollTo(0, 0);
+            document.getElementById('searchProseso').value = '';
+            filterButtons('proseso-grid', '');
+            previousSection = currentSection;
+            currentSection = 'proseso';
+            updateNavActive('proseso');
+            closeMobileMenu();
+        }
+
+        function showGampanin() {
+            hideAllSections();
+            document.getElementById('gampanin').style.display = 'flex';
+            document.body.style.overflow = 'auto';
+            window.scrollTo(0, 0);
+            document.getElementById('searchGampanin').value = '';
+            filterButtons('gampanin-grid', '');
+            previousSection = currentSection;
+            currentSection = 'gampanin';
+            updateNavActive('gampanin');
+            closeMobileMenu();
+        }
+
+        function showDetail(term, section) {
+            currentDetailTerm = term;
+            hideAllSections();
+            document.getElementById('detailTitle').textContent = term;
+            document.getElementById('detailTerm').textContent = term;
+
+            let definition = contentMap[term] ? contentMap[term].definition : 'Detalye tungkol sa ' + term + '.';
+            let usage = contentMap[term] ? contentMap[term].usage : 'Halimbawa ng paggamit ng ' + term + ' sa pangungusap.';
+
+            document.getElementById('detailDefinition').textContent = definition;
+            document.getElementById('detailUsage').textContent = usage;
+
+            resetAllAudioIcons();
+
+
+
+            const videoElement = document.getElementById('detailVideo');
+            const imageElement = document.getElementById('detailImage');
+            const videoPlaceholder = document.getElementById('videoPlaceholder');
+
+            videoElement.style.display = 'none';
+            imageElement.style.display = 'none';
+            videoPlaceholder.style.display = 'none';
+
+            if (section === 'proseso' && videoMap[term]) {
+                videoElement.src = videoMap[term];
+                videoElement.style.display = 'block';
+            } else if (imageMap[term]) {
+                imageElement.src = imageMap[term];
+                imageElement.style.display = 'block';
+            } else {
+                videoPlaceholder.style.display = 'flex';
+            }
+
+            document.getElementById('detail').style.display = 'flex';
+            document.body.style.overflow = 'auto';
+            window.scrollTo(0, 0);
+            previousSection = currentSection;
+            currentSection = 'detail';
+            updateNavActive('detail');
+            closeMobileMenu();
+        }
+
+        function toggleAudio(type) {
+            let audioFile = type === 'definition' ? definitionAudioMap[currentDetailTerm] : usageAudioMap[currentDetailTerm];
+            let audioIcon = document.getElementById(type === 'definition' ? 'definitionAudioIcon' : 'usageAudioIcon');
+
+            if (!audioFile) { alert('Audio not available for ' + type + ' of: ' + currentDetailTerm); return; }
+
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                document.querySelectorAll('.audio-icon').forEach(i => {
+                    i.classList.remove('playing');
+                    i.textContent = 'PAKINGGAN';
+                });
+            }
+
+            if (currentAudio && currentAudio.src.includes(audioFile)) { currentAudio = null; return; }
+
+            currentAudio = new Audio(audioFile);
+            if (type === 'usage') currentAudio.currentTime = 1.0;
+            currentAudio.play();
+            if (audioIcon) { audioIcon.classList.add('playing'); audioIcon.textContent = 'TUMUTUGTOG'; }
+
+            currentAudio.onended = function () {
+                if (audioIcon) { audioIcon.classList.remove('playing'); audioIcon.textContent = 'PAKINGGAN'; }
+                currentAudio = null;
+            };
+
+            currentAudio.onerror = function () {
+                if (audioIcon) { audioIcon.classList.remove('playing'); audioIcon.textContent = 'PAKINGGAN'; }
+                alert('Audio file not found for: ' + currentDetailTerm);
+                currentAudio = null;
+            };
+        }
+
+        function resetAllAudioIcons() {
+            document.querySelectorAll('.audio-icon').forEach(i => {
+                i.classList.remove('playing');
+                if (i.id !== 'wotdAudioIcon') i.textContent = 'PAKINGGAN';
+            });
+        }
+
+        function goBackToPreviousSection() {
+            if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; }
+            resetAllAudioIcons();
+            const map = { kagamitan: showKagamitan, materyales: showMateryales, proseso: showProseso, gampanin: showGampanin, flashcard: showFlashcard };
+            (map[previousSection] || showHome)();
+        }
+
+        // ===== CAROUSEL =====
+        function moveCarousel(direction) {
+            const wrapper = document.getElementById('carouselWrapper');
+            const cards = wrapper.querySelectorAll('.carousel-card');
+            const cardWidth = cards[0].offsetWidth + 24;
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = 0;
+            if (currentIndex > cards.length - 1) currentIndex = cards.length - 1;
+            wrapper.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            updateDots();
+        }
+
+        function goToSlide(index) {
+            const wrapper = document.getElementById('carouselWrapper');
+            const cards = wrapper.querySelectorAll('.carousel-card');
+            const cardWidth = cards[0].offsetWidth + 24;
+            currentIndex = index;
+            wrapper.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            updateDots();
+        }
+
+        function updateDots() {
+            document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        function scrollToCarousel() {
+            document.querySelector('.carousel-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToKasaysayan() {
+            if (currentSection !== 'home') showHome();
+            previousSection = currentSection;
+            currentSection = 'kasaysayan';
+            updateNavActive('kasaysayan');
+            setTimeout(() => {
+                document.getElementById('kasaysayan').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // ===== SCROLL EFFECTS =====
+        window.addEventListener('scroll', function () {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+
+            // Reading progress
+            const total = document.body.scrollHeight - window.innerHeight;
+            const progress = total > 0 ? (window.scrollY / total) * 100 : 0;
+            document.getElementById('readingProgress').style.width = progress + '%';
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function (e) {
+            if (currentSection === 'kagamitan' || currentSection === 'materyales' ||
+                currentSection === 'proseso' || currentSection === 'gampanin') {
+                if (e.key === 'Escape') showHome();
+            }
+            if (currentSection === 'detail') {
+                if (e.key === 'Escape') goBackToPreviousSection();
+            }
+        });
+
+        // ===== BACKGROUND SOUND =====
+        let bgMusic = document.getElementById('bgMusic');
+        let soundPanelOpen = false;
+        let currentVolLevel = 'mid'; // default volume
+        let isMuted = false;
+
+        // Volume levels map
+        const volumeLevels = { mute: 0, low: 0.15, mid: 0.4, high: 0.8 };
+
+        function startBgMusic() {
+            bgMusic.volume = volumeLevels[currentVolLevel];
+            bgMusic.play().catch(() => {
+                // Autoplay blocked — will start on first user interaction
+                document.addEventListener('click', function tryPlay() {
+                    bgMusic.play();
+                    document.removeEventListener('click', tryPlay);
+                }, { once: true });
+            });
+            updateSoundBtn();
+        }
+
+        function toggleSoundPanel() {
+            soundPanelOpen = !soundPanelOpen;
+            document.getElementById('soundPanel').classList.toggle('open', soundPanelOpen);
+        }
+
+        // Close panel when clicking outside
+        document.addEventListener('click', function (e) {
+            const control = document.getElementById('soundControl');
+            if (!control.contains(e.target) && soundPanelOpen) {
+                soundPanelOpen = false;
+                document.getElementById('soundPanel').classList.remove('open');
+            }
+        });
+
+        function setVolume(level) {
+            currentVolLevel = level;
+            isMuted = (level === 'mute');
+            bgMusic.volume = volumeLevels[level];
+            if (isMuted) {
+                bgMusic.pause();
+            } else {
+                bgMusic.play().catch(() => { });
+            }
+            // Update active button
+            ['volMute', 'volLow', 'volMid', 'volHigh'].forEach(id => {
+                document.getElementById(id).classList.remove('active');
+            });
+            const map = { mute: 'volMute', low: 'volLow', mid: 'volMid', high: 'volHigh' };
+            document.getElementById(map[level]).classList.add('active');
+            updateSoundBtn();
+        }
+
+        function updateSoundBtn() {
+            const btn = document.getElementById('soundToggleBtn');
+            const icons = { mute: '🔇', low: '🔈', mid: '🔉', high: '🔊' };
+            btn.textContent = icons[currentVolLevel];
+            btn.classList.toggle('muted', isMuted);
+        }
+
+        const termCategoryMap = {
+            kagamitan: ['Iskóring o pagulungán', 'Islátán', 'Katér', 'Malakíng mukhâ', 'Maliít na mukhâ', 'Mukhâ', 'Panghágod', 'Pang-imprénta', 'Pintúra'],
+            materyales: ['Brand néw', 'Del mónte', 'Dilà', 'Dóbol', 'Gawgáw', 'Kartón', 'Kóla', 'Panapì', 'Pandugtóng', 'Pantápal', 'Partisyón', 'lokál', 'Skráp', 'Síngle', 'Sosà', 'Tsinélas'],
+            proseso: ['Delivér', 'Dudugtúngan', 'Ekspórt', 'Hahagúrin', 'Impórt', 'Pagbabaliktád', 'Pag-iimprénta', 'Pag-i-islát', 'Pagkakamáda', 'Pagpapagúlong', 'Pagpapakwentá', 'Pagpapaldó', 'Pagtatábas', 'Pagtatápal', 'Pakyáwan', 'Pick up', 'Rejêct', 'Repaír', 'Rush', 'Sinasapían', 'Yayariín'],
+            gampanin: ['Katiwalà', 'Mananábas', 'Taás', 'Taga-imprénta', 'Tagapaldó']
+        };
+
+        // ===== WORD OF THE DAY =====
+        function initWordOfDay(forceNew) {
+            const allTerms = Object.keys(contentMap);
+            let savedDay = localStorage.getItem('glosaryo_wotd_day');
+            let savedTerm = localStorage.getItem('glosaryo_wotd_term');
+            const today = new Date().toDateString();
+            if (!forceNew && savedDay === today && savedTerm && contentMap[savedTerm]) {
+                renderWotd(savedTerm);
+                return;
+            }
+            const term = allTerms[Math.floor(Math.random() * allTerms.length)];
+            try {
+                localStorage.setItem('glosaryo_wotd_day', today);
+                localStorage.setItem('glosaryo_wotd_term', term);
+            } catch (e) { }
+            renderWotd(term);
+        }
+
+        function renderWotd(term) {
+            document.getElementById('wotdTerm').textContent = term;
+            document.getElementById('wotdDef').textContent = contentMap[term] ? contentMap[term].definition : '';
+            const cat = Object.keys(termCategoryMap).find(c => termCategoryMap[c].includes(term)) || '';
+            document.getElementById('wotdCat').textContent = cat ? '■ ' + cat.toUpperCase() : '';
+        }
+
+        function openWotdDetail() {
+            const term = document.getElementById('wotdTerm').textContent;
+            const cat = Object.keys(termCategoryMap).find(c => termCategoryMap[c].includes(term)) || 'kagamitan';
+            showDetail(term, cat);
+        }
+
+        // ===== FLASHCARD =====
+        let fcDeck = [];
+        let fcIndex = 0;
+        let fcFilter = 'lahat';
+        let fcIsFlipped = false;
+
+        function buildFcDeck(filter) {
+            let terms = [];
+            if (filter === 'lahat') {
+                terms = Object.keys(contentMap).map(t => ({ term: t, cat: Object.keys(termCategoryMap).find(c => termCategoryMap[c].includes(t)) || '' }));
+            } else {
+                terms = (termCategoryMap[filter] || []).map(t => ({ term: t, cat: filter }));
+            }
+            return terms;
+        }
+
+        function setFcFilter(filter, btn) {
+            fcFilter = filter;
+            document.querySelectorAll('.fc-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            initFlashcards();
+        }
+
+        function initFlashcards() {
+            fcDeck = buildFcDeck(fcFilter);
+            fcIndex = 0;
+            fcIsFlipped = false;
+            document.getElementById('flashcardInner').classList.remove('flipped');
+            document.getElementById('fcDoneScreen').style.display = 'none';
+            document.getElementById('fcControls').style.display = '';
+            document.getElementById('flashcardScene').style.display = '';
+            if (fcDeck.length === 0) {
+                document.getElementById('fcTerm').textContent = 'Walang salita';
+                document.getElementById('fcDef').textContent = '';
+                document.getElementById('fcUsage').textContent = '';
+                document.getElementById('fcCat').textContent = '';
+                document.getElementById('fcProgressText').textContent = '0 / 0';
+                document.getElementById('fcProgressBar').style.width = '0%';
+                document.getElementById('fcCountDisplay').textContent = '';
+                return;
+            }
+            renderFlashcard();
+        }
+
+        function renderFlashcard() {
+            if (fcIndex >= fcDeck.length) {
+                document.getElementById('fcDoneScreen').style.display = 'flex';
+                document.getElementById('fcControls').style.display = 'none';
+                document.getElementById('flashcardScene').style.display = 'none';
+                const fc = document.getElementById('fcDoneSub');
+                fc.textContent = 'Napag-aralan mo ang ' + fcDeck.length + ' salita!';
+                return;
+            }
+            const item = fcDeck[fcIndex];
+            document.getElementById('fcTerm').textContent = item.term;
+            document.getElementById('fcCat').textContent = item.cat ? '[ ' + item.cat.toUpperCase() + ' ]' : '';
+            const data = contentMap[item.term];
+            document.getElementById('fcDef').textContent = data ? data.definition : '';
+            document.getElementById('fcUsage').textContent = data ? '"' + data.usage + '"' : '';
+            document.getElementById('fcProgressText').textContent = (fcIndex + 1) + ' / ' + fcDeck.length;
+            document.getElementById('fcProgressBar').style.width = ((fcIndex / fcDeck.length) * 100) + '%';
+            document.getElementById('fcCountDisplay').textContent = (fcDeck.length - fcIndex - 1) + ' nalabi';
+            // Reset flip
+            fcIsFlipped = false;
+            document.getElementById('flashcardInner').classList.remove('flipped');
+        }
+
+        function flipFlashcard() {
+            fcIsFlipped = !fcIsFlipped;
+            document.getElementById('flashcardInner').classList.toggle('flipped', fcIsFlipped);
+        }
+
+        function fcNavigate(dir) {
+            fcIndex += dir;
+            if (fcIndex < 0) fcIndex = 0;
+            renderFlashcard();
+        }
+
+        function restartFlashcard() {
+            fcIndex = 0;
+            document.getElementById('fcDoneScreen').style.display = 'none';
+            document.getElementById('fcControls').style.display = '';
+            document.getElementById('flashcardScene').style.display = '';
+            renderFlashcard();
+        }
+
+        function shuffleFlashcards() {
+            for (let i = fcDeck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [fcDeck[i], fcDeck[j]] = [fcDeck[j], fcDeck[i]];
+            }
+            fcIndex = 0;
+            renderFlashcard();
+        }
+
+        function showFlashcard() {
+            hideAllSections();
+            document.getElementById('flashcard').style.display = 'flex';
+            document.body.style.overflow = 'auto';
+            window.scrollTo(0, 0);
+            initFlashcards();
+            previousSection = currentSection;
+            currentSection = 'flashcard';
+            updateNavActive('flashcard');
+            closeMobileMenu();
+        }
+
+        // ===== QUIZ =====
+        let quizQuestions = [];
+        let quizCurrentIndex = 0;
+        let quizScore = 0;
+        let quizFilter = 'lahat';
+        let quizCount = 10;
+        let quizAnswered = false;
+
+        function setQuizFilter(filter, btn) {
+            quizFilter = filter;
+            document.querySelectorAll('#quizSetup .fc-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function setQuizCount(n, btn) {
+            quizCount = n;
+            document.querySelectorAll('#quizCountBtns .fc-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function buildQuizPool() {
+            let terms;
+            if (quizFilter === 'lahat') terms = Object.keys(contentMap);
+            else terms = termCategoryMap[quizFilter] || [];
+            return terms.filter(t => contentMap[t]);
+        }
+
+        function startQuiz() {
+            const pool = buildQuizPool();
+            if (pool.length < 4) {
+                alert('Hindi sapat ang mga salita para sa quiz. Pumili ng ibang kategorya.');
+                return;
+            }
+            // Shuffle pool
+            const shuffled = [...pool].sort(() => Math.random() - 0.5);
+            const count = Math.min(quizCount, shuffled.length);
+            quizQuestions = shuffled.slice(0, count).map(term => {
+                // Pick 3 wrong answers from pool
+                const wrongPool = pool.filter(t => t !== term).sort(() => Math.random() - 0.5).slice(0, 3);
+                const options = [term, ...wrongPool].sort(() => Math.random() - 0.5);
+                return { term, options, correct: term };
+            });
+            quizCurrentIndex = 0;
+            quizScore = 0;
+            quizAnswered = false;
+            document.getElementById('quizScoreDisplay').textContent = '0';
+            document.getElementById('quizSetup').style.display = 'none';
+            document.getElementById('quizGame').style.display = 'block';
+            document.getElementById('quizResult').style.display = 'none';
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            if (quizCurrentIndex >= quizQuestions.length) {
+                showQuizResult();
+                return;
+            }
+            quizAnswered = false;
+            const q = quizQuestions[quizCurrentIndex];
+            const total = quizQuestions.length;
+            document.getElementById('quizQNum').textContent = (quizCurrentIndex + 1) + '/' + total;
+            document.getElementById('quizProgressBar').style.width = ((quizCurrentIndex / total) * 100) + '%';
+            document.getElementById('quizFeedback').textContent = '';
+            document.getElementById('quizFeedback').className = 'quiz-feedback';
+            document.getElementById('quizNextBtn').style.display = 'none';
+            // Show the definition as the question; pick correct term
+            const def = contentMap[q.term].definition;
+            document.getElementById('quizQuestion').textContent = def;
+            const optContainer = document.getElementById('quizOptions');
+            optContainer.innerHTML = q.options.map((opt, i) => {
+                return `<button class="quiz-option" onclick="answerQuiz('${opt.replace(/'/g, "\\'")}', '${q.correct.replace(/'/g, "\\'")}', this)">${opt}</button>`;
+            }).join('');
+        }
+
+        function answerQuiz(chosen, correct, btn) {
+            if (quizAnswered) return;
+            quizAnswered = true;
+            const allBtns = document.querySelectorAll('.quiz-option');
+            allBtns.forEach(b => b.disabled = true);
+            const fb = document.getElementById('quizFeedback');
+            if (chosen === correct) {
+                quizScore++;
+                document.getElementById('quizScoreDisplay').textContent = quizScore;
+                btn.classList.add('correct');
+                fb.textContent = '✓ TAMA! Magaling!';
+                fb.className = 'quiz-feedback correct-fb';
+            } else {
+                btn.classList.add('wrong');
+                allBtns.forEach(b => { if (b.textContent.trim() === correct) b.classList.add('correct'); });
+                fb.textContent = '✗ Mali. Ang tamang sagot: ' + correct;
+                fb.className = 'quiz-feedback wrong-fb';
+            }
+            document.getElementById('quizNextBtn').style.display = 'block';
+        }
+
+        function nextQuizQuestion() {
+            quizCurrentIndex++;
+            renderQuizQuestion();
+        }
+
+        function showQuizResult() {
+            document.getElementById('quizGame').style.display = 'none';
+            const result = document.getElementById('quizResult');
+            result.style.display = 'flex';
+            const total = quizQuestions.length;
+            const pct = Math.round((quizScore / total) * 100);
+            document.getElementById('quizResultScore').textContent = quizScore + '/' + total;
+            let grade, title;
+            if (pct === 100) { grade = 'Perpekto! Napakahusay mo!'; title = 'NAPAKAHUSAY!'; }
+            else if (pct >= 80) { grade = 'Magaling! Patuloy lang!'; title = 'MAGALING!'; }
+            else if (pct >= 60) { grade = 'Okay! Pag-aralan pa nang higit.'; title = 'PASADO!'; }
+            else { grade = 'Mag-aral pa. Kaya mo ito!'; title = 'SUBUKAN ULIT!'; }
+            document.getElementById('quizResultTitle').textContent = title;
+            document.getElementById('quizResultGrade').textContent = grade;
+            document.getElementById('quizProgressBar').style.width = '100%';
+        }
+
+        function showQuiz() {
+            hideAllSections();
+            document.getElementById('quiz').style.display = 'flex';
+            document.body.style.overflow = 'auto';
+            window.scrollTo(0, 0);
+            previousSection = currentSection;
+            currentSection = 'quiz';
+            updateNavActive('quiz');
+            closeMobileMenu();
+        }
+
+        // ===== SPEAK WORD OF THE DAY =====
+        function speakWotd() {
+            const term = document.getElementById('wotdTerm').textContent;
+            const def = document.getElementById('wotdDef').textContent;
+            const icon = document.getElementById('wotdAudioIcon');
+            if (!term || term === '—') return;
+            window.speechSynthesis.cancel();
+            const utt = new SpeechSynthesisUtterance(term + '. ' + def);
+            utt.lang = 'fil-PH';
+            utt.rate = 0.88;
+            if (icon) { icon.classList.add('playing'); icon.textContent = 'TUMUTUGTOG'; }
+            utt.onend = utt.onerror = function () {
+                if (icon) { icon.classList.remove('playing'); icon.textContent = 'PAKINGGAN'; }
+            };
+            window.speechSynthesis.speak(utt);
+        }
+
+        // ===== DARK MODE TOGGLE =====
+        function toggleDarkMode() {
+            const body = document.body;
+            const btn = document.getElementById('darkModeBtn');
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            if (btn) btn.innerHTML = isDark ? '<i class="fas fa-moon"></i> Dilim' : '<i class="fas fa-sun"></i> Liwanag';
+            localStorage.setItem('darkMode', isDark ? '1' : '0');
+        }
+
+        // ===== START ON DOMContentLoaded =====
+        document.addEventListener('DOMContentLoaded', function () {
+            showHome();
+            document.getElementById('volMid').classList.add('active');
+            initWordOfDay(false);
+
+            // Restore dark mode preference
+            if (localStorage.getItem('darkMode') === '1') {
+                document.body.classList.add('dark-mode');
+                const btn = document.getElementById('darkModeBtn');
+                if (btn) btn.innerHTML = '<i class="fas fa-moon"></i> Dilim';
+            }
+
+            // Wait for first user interaction, then start music
+            function startOnInteraction() {
+                startBgMusic();
+                document.removeEventListener('click', startOnInteraction);
+                document.removeEventListener('keydown', startOnInteraction);
+                document.removeEventListener('touchstart', startOnInteraction);
+            }
+
+            document.addEventListener('click', startOnInteraction);
+            document.addEventListener('keydown', startOnInteraction);
+            document.addEventListener('touchstart', startOnInteraction);
+        });
+    </script>
+</body>
+
+</html>
